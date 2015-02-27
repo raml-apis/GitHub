@@ -1,0 +1,48 @@
+#%RAML 0.8
+title: GitHub Upload
+version: v3
+baseUri: https://uploads.github.com/
+mediaType: application/json
+securitySchemes:
+  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+schemas:
+  - assetsPost: !include schemas/assetsPost-schema.json
+resourceTypes:
+  - item: !include resourceTypes/item.raml
+  - base: !include resourceTypes/base.raml
+securedBy: [ oauth_2_0 ]
+/repos/{ownerId}/{repoId}: 
+  type: item
+  uriParameters: 
+    ownerId: 
+      description: Id of the owner.
+      type: integer
+    repoId: 
+      description: Id of repository.
+      type: integer
+  /releases/{id}/assets: 
+    type: base
+    post: 
+      description: |
+        Upload a release asset
+        This is a unique endpoint. The request domain changes from "api.github.com" to "uploads.github.com". You need to use an HTTP client which supports SNI to make calls to this endpoint.
+        The asset data is expected in its raw binary form, rather than JSON. Everything else about the endpoint is the same. Pass your authentication exactly the same as the rest of the API.
+      headers: 
+        Content-Type: 
+          description: The content type of the asset. This should be set in the Header. For a list of acceptable types, refer this list of common media types.
+          required: true
+          example: application/zip
+      queryParameters: 
+        name: 
+          description: The file name of the asset. This should be set in the URI query parameter.
+          required: true
+          example: foo.zip
+      responses: 
+        201: 
+          body: 
+            application/json: 
+              schema: assetsPost
+              example: !include examples/assetsPost-example.json
+documentation: 
+  - title: Headline
+    content: !include docs/uploadsApi/headline.md

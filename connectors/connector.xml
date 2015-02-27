@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:oauth2="http://www.mulesoft.org/schema/mule/oauth2" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.6.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/oauth2 http://www.mulesoft.org/schema/mule/oauth2/current/mule-oauth2.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <oauth2:token-manager-config name="Token_Manager_Config" doc:name="Token Manager Config"/>
+    <http:request-config name="HTTP_Request_Github" protocol="HTTPS" host="api.github.com" port="443" doc:name="HTTP Request Configuration">
+        <oauth2:authorization-code-grant-type clientId="{clientId}" clientSecret="{clientSecret}" redirectionUrl="http://localhost:9000/codeGithub" tokenManager-ref="Token_Manager_Config">
+            <oauth2:authorization-request authorizationUrl="https://github.com/login/oauth/authorize" localAuthorizationUrl="http://localhost:9000/authorizeGithub" scopes="user,user:email,user:follow,public_repo,repo,repo:status,delete_repo,notifications,gist"/>
+            <oauth2:token-request tokenUrl="https://github.com/login/oauth/access_token">
+                <oauth2:token-response accessToken="#[payload['access_token']]"/>
+            </oauth2:token-request>
+        </oauth2:authorization-code-grant-type>
+        <http:raml-api-configuration location="100apis/github-v3/api.raml"/>
+    </http:request-config>
+    <http:request-config name="HTTP_Request_GithubUpload" protocol="HTTPS" host="api.github.com" port="443" doc:name="HTTP Request Configuration">
+        <oauth2:authorization-code-grant-type clientId="{clientId}" clientSecret="{clientSecret}" redirectionUrl="http://localhost:9000/codeGithubUpload" tokenManager-ref="Token_Manager_Config">
+            <oauth2:authorization-request authorizationUrl="https://github.com/login/oauth/authorize" localAuthorizationUrl="http://localhost:9000/authorizeGithubUpload" scopes="user,user:email,user:follow,public_repo,repo,repo:status,delete_repo,notifications,gist"/>
+            <oauth2:token-request tokenUrl="https://github.com/login/oauth/access_token">
+            	<oauth2:token-response accessToken="#[payload['access_token']]"/>
+           	</oauth2:token-request>
+        </oauth2:authorization-code-grant-type>
+        <http:raml-api-configuration location="100apis/github-v3/api.raml"/>
+    </http:request-config>
+    <flow name="raml-test-githubFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/github" doc:name="HTTP"/>
+        <http:request config-ref="HTTP_Request_Github" path="/repositories" method="GET" doc:name="HTTP">
+            <http:request-builder>
+            </http:request-builder>
+            <http:success-status-code-validator values="400,401,200"/>
+        </http:request>
+        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="raml-test-githubUploadFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/githubUpload" doc:name="HTTP"/>
+        <custom-transformer returnClass="org.mule.api.MuleMessage" encoding="UTF-8" mimeType="application/json" class="prueba.GitHubUploadTransformer" doc:name="Java"/>
+        <http:request config-ref="HTTP_Request_GithubUpload" path="/repos/{ownerId}/{repoId}/releases/{releaseId}/assets" method="GET" doc:name="HTTP">
+            <http:request-builder>
+                <http:query-param paramName="name" value="newRelease002"/><!-- Must have unique value -->
+                <http:uri-param paramName="ownerId" value="{GitHub username}"/>
+                <http:uri-param paramName="repoId" value="{Repository name}"/>
+                <http:uri-param paramName="releaseId" value="{Release ID}"/>
+            </http:request-builder>
+            <http:success-status-code-validator values="400,401,200"/>
+        </http:request>
+        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>
