@@ -11,15 +11,13 @@ resourceTypes:
   - item: !include resourceTypes/item.raml
   - base: !include resourceTypes/base.raml
 securedBy: [ oauth_2_0 ]
-/repos/{ownerId}/{repoId}: 
+/repos/{owner}/{repo}: 
   type: item
   uriParameters: 
-    ownerId: 
-      description: Id of the owner.
-      type: integer
-    repoId: 
-      description: Id of repository.
-      type: integer
+    owner: 
+      description: Name of the owner.
+    repo: 
+      description: Name of repository.
   /releases/{id}/assets: 
     type: base
     post: 

@@ -382,7 +382,7 @@ securedBy: [ oauth_2_0 ]
     type: item
     uriParameters: 
       id: 
-        description: Id of a thread.
+        description: Id of thread.
         type: integer
     get: 
       description: View a single thread.
@@ -459,7 +459,7 @@ securedBy: [ oauth_2_0 ]
     type: item
     uriParameters: 
       id: 
-        description: Id of a thread.
+        description: Id of gist.
         type: integer
     get: 
       description: Get a single gist.
@@ -532,7 +532,7 @@ securedBy: [ oauth_2_0 ]
         type: item
         uriParameters: 
           commentId: 
-            description: Id of the comment.
+            description: Id of comment.
             type: integer
         get: 
           description: Get a single comment.
@@ -593,12 +593,11 @@ securedBy: [ oauth_2_0 ]
             application/json: 
               schema: gists
               example: !include examples/gists-example.json
-/orgs/{orgId}: 
+/orgs/{org}: 
   type: item
   uriParameters: 
-    orgId: 
-      description: Id of organisation.
-      type: integer
+    org: 
+      description: Name of organisation.
   get: 
     description: Get an Organization.
     responses: 
@@ -637,12 +636,11 @@ securedBy: [ oauth_2_0 ]
               example: !include examples/orgMembers-example.json
         302: 
           description: Response if requester is not an organization member.
-    /{userId}: 
+    /{username}: 
       type: item
       uriParameters: 
-        userId: 
-          description: Id of the user.
-          type: integer
+        username: 
+          description: Name of the user.
       delete: 
         description: |
           Remove a member.
@@ -737,12 +735,11 @@ securedBy: [ oauth_2_0 ]
             application/json: 
               schema: orgPublicMembers
               example: !include examples/orgPublicMembers-example.json
-    /{userId}: 
+    /{username}: 
       type: base
       uriParameters: 
-        userId: 
-          description: Id of the user.
-          type: integer
+        username: 
+          description: Name of the user.
       get: 
         description: Check public membership.
         responses: 
@@ -783,11 +780,11 @@ securedBy: [ oauth_2_0 ]
             application/json: 
               schema: issues
               example: !include examples/issues-example.json
-/teams/{teamsId}: 
+/teams/{teamId}: 
   type: item
   uriParameters: 
-    teamsId: 
-      description: Id of a team.
+    teamId: 
+      description: Id of team.
       type: integer
   get: 
     description: Get team.
@@ -834,12 +831,11 @@ securedBy: [ oauth_2_0 ]
             application/json: 
               schema: members
               example: !include examples/members-example.json
-    /{userId}: 
+    /{username}: 
       type: base
       uriParameters: 
-        userId: 
-          description: Id of a member.
-          type: integer
+        username: 
+          description: Name of a member.
       get: 
         description: |
           The "Get team member" API is deprecated and is scheduled for removal in the next major version of the API. We recommend using the Get team membership API instead. It allows you to get both active and pending memberships.
@@ -881,12 +877,11 @@ securedBy: [ oauth_2_0 ]
         responses: 
           204: 
             description: Team member removed.
-  /memberships/{userId}: 
+  /memberships/{username}: 
     type: base
     uriParameters: 
-      userId: 
-        description: Id of a member.
-        type: integer
+      username: 
+        description: Name of a member.
     get: 
       description: |
         Get team membership.
@@ -969,15 +964,13 @@ securedBy: [ oauth_2_0 ]
             schema: repositories
             example: !include examples/repositories-example.json
     securedBy: [ null , oauth_2_0 ]
-/repos/{ownerId}/{repoId}: 
+/repos/{owner}/{repo}: 
   type: item
   uriParameters: 
-    ownerId: 
-      description: Id of the owner.
-      type: integer
-    repoId: 
-      description: Id of repository.
-      type: integer
+    owner: 
+      description: Name of repository owner.
+    repo: 
+      description: Name of repository.
   get: 
     description: Get repository.
     responses: 
@@ -1037,7 +1030,7 @@ securedBy: [ oauth_2_0 ]
       type: item
       uriParameters: 
         number: 
-          description: Id of a pull.
+          description: Id of pull.
           type: integer
       get: 
         description: Get a single pull request.
@@ -1156,11 +1149,11 @@ securedBy: [ oauth_2_0 ]
               application/json: 
                 schema: pullsComments
                 example: !include examples/pullsComments-example.json
-      /{number}: 
+      /{commentId}: 
         type: item
         uriParameters: 
-          number: 
-            description: Id of the comment.
+          commentId: 
+            description: Id of comment.
             type: integer
         get: 
           description: Get a single comment.
@@ -1214,7 +1207,7 @@ securedBy: [ oauth_2_0 ]
       type: item
       uriParameters: 
         hookId: 
-          description: Id of the hook.
+          description: Id of hook.
           type: integer
       get: 
         description: Get single hook.
@@ -1281,7 +1274,7 @@ securedBy: [ oauth_2_0 ]
       type: item
       uriParameters: 
         keyId: 
-          description: Id of a key.
+          description: Id of key.
           type: integer
       get: 
         description: Get a key
@@ -1328,7 +1321,7 @@ securedBy: [ oauth_2_0 ]
       type: item
       uriParameters: 
         number: 
-          description: Id of the milestone.
+          description: Number of milestone.
           type: integer
       get: 
         description: Get a single milestone.
@@ -1382,7 +1375,7 @@ securedBy: [ oauth_2_0 ]
       type: item
       uriParameters: 
         commentId: 
-          description: Id of a comment.
+          description: Id of comment.
           type: integer
       get: 
         description: Get a single commit comment.
@@ -1522,12 +1515,11 @@ securedBy: [ oauth_2_0 ]
             application/json: 
               schema: branches
               example: !include examples/branches-example.json
-    /{branchId}: 
+    /{branch}: 
       type: item
       uriParameters: 
-        branchId: 
-          description: Id of the branch.
-          type: integer
+        branch: 
+          description: Name of the branch.
       get: 
         description: Get Branch
         responses: 
@@ -1823,7 +1815,7 @@ securedBy: [ oauth_2_0 ]
       type: item
       uriParameters: 
         downloadId: 
-          description: Id of the download.
+          description: Id of download.
           type: integer
       get: 
         description: Deprecated. Get a single download.
@@ -1921,7 +1913,7 @@ securedBy: [ oauth_2_0 ]
       type: item
       uriParameters: 
         number: 
-          description: Id of the issue.
+          description: Number of issue.
           type: integer
       get: 
         description: Get a single issue
@@ -2047,7 +2039,7 @@ securedBy: [ oauth_2_0 ]
         type: item
         uriParameters: 
           commentId: 
-            description: Id of the comment.
+            description: ID of comment.
             type: integer
         get: 
           description: Get a single comment.
@@ -2248,8 +2240,7 @@ securedBy: [ oauth_2_0 ]
         type: item
         uriParameters: 
           shaCode: 
-            description: Id of the owner.
-            type: integer
+            description: Tree SHA.
         get: 
           description: Get a Tree.
           queryParameters: 
@@ -2588,12 +2579,12 @@ securedBy: [ oauth_2_0 ]
             application/json: 
               schema: users
               example: !include examples/users-example.json
-    /{userId}: 
+    /{username}: 
       type: base
       uriParameters: 
-        userId: 
-          type: integer
-      get: 
+        username:
+          description: Name of user.
+        get: 
         description: Check if you are following a user.
         responses: 
           204: 
@@ -2726,6 +2717,7 @@ securedBy: [ oauth_2_0 ]
       type: item
       uriParameters: 
         keyId: 
+          description: ID of key.
           type: integer
       get: 
         description: Get a single public key.
@@ -2804,15 +2796,13 @@ securedBy: [ oauth_2_0 ]
             application/json: 
               schema: user-userId-subscribitions
               example: !include examples/user-userId-subscribitions-example.json
-    /{ownerId}/{repoId}: 
+    /{owner}/{repo}: 
       type: base
       uriParameters: 
-        ownerId: 
-          description: Id of the owner.
-          type: integer
-        repoId: 
-          description: Id of repository.
-          type: integer
+        owner: 
+          description: Name of the owner.
+        repo: 
+          description: Name of repository.
       get: 
         description: Check if you are watching a repository.
         responses: 
@@ -2860,7 +2850,7 @@ securedBy: [ oauth_2_0 ]
       header to get the URL for the next page of users.
     queryParameters: 
       since: 
-        description: The integer ID of the last User that you ve seen.
+        description: The integer ID of the last User that you've seen.
         type: integer
     responses: 
       200: 
@@ -2868,11 +2858,11 @@ securedBy: [ oauth_2_0 ]
           application/json: 
             schema: users
             example: !include examples/users-example.json
-  /{userId}: 
-    type: collection
+  /{username}: 
+    type: item
     uriParameters: 
-      userId: 
-        type: integer
+      username:
+        description: Name of user.
     get: 
       description: Get a single user.
       responses: 
@@ -2923,11 +2913,11 @@ securedBy: [ oauth_2_0 ]
                 schema: gists
                 example: !include examples/gists-example.json
         securedBy: [ null , oauth_2_0 ]
-    /following/{targetUserId}: 
+    /following/{targetUser}: 
       type: base
       uriParameters: 
-        targetUserId: 
-          type: integer
+        targetUser:
+          description: Name of user. 
       get: 
         description: Check if one user follows another.
         responses: 
@@ -3030,15 +3020,13 @@ securedBy: [ oauth_2_0 ]
           body: 
             text/html: 
               example: !include examples/raw-example.html
-/networks/{ownerId}/{repoId}/events: 
+/networks/{owner}/{repo}/events: 
   type: collection
   uriParameters: 
-    ownerId: 
-      description: Id of the owner.
-      type: integer
-    repoId: 
-      description: Id of repository.
-      type: integer
+    owner: 
+      description: Name of the owner.
+    repo: 
+      description: Name of repository.
   get: 
     description: List public events for a network of repositories.
     responses: 
