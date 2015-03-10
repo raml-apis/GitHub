@@ -711,7 +711,7 @@ securedBy: [ oauth_2_0 ]
     post: 
       description: |
         Create team.
-        In order to create a team, the authenticated user must be an owner of orgId.
+        In order to create a team, the authenticated user must be an owner of organization.
       body: 
         application/json: 
           schema: orgTeamsPost
@@ -933,7 +933,12 @@ securedBy: [ oauth_2_0 ]
             application/json: 
               schema: teamRepos
               example: !include examples/teamRepos-example.json
-    /{ownerId}/{repoId}: 
+    /{owner}/{repo}:
+      uriParameters: 
+        owner: 
+          description: Name of a repository owner. 
+        repo: 
+          description: Name of a repository.
       type: base
       get: 
         description: Check if a team manages a repository
@@ -943,7 +948,12 @@ securedBy: [ oauth_2_0 ]
           204: 
             description: |
               No content.
-    /{orgId}/{repoId}: 
+    /{org}/{repo}: 
+      uriParameters: 
+        org: 
+          description: Name of a organization. 
+        repo: 
+          description: Name of a repository.
       type: base
       put: 
         description: In order to add a repository to a team, the authenticated user must be an owner of the org that the team is associated with. Also, the repository must be owned by the organization, or a direct fork of a repository owned by the organization.
@@ -2669,8 +2679,13 @@ securedBy: [ oauth_2_0 ]
             application/json: 
               schema: user-userId-starred
               example: !include examples/user-userId-starred-example.json
-    /{ownerId}/{repoId}: 
+    /{owner}/{repo}: 
       type: base
+      uriParameters: 
+        owner: 
+          description: Name of a repository owner. 
+        repo: 
+          description: Name of a repository.
       get: 
         description: Check if you are starring a repository.
         responses: 
