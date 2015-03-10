@@ -1,7 +1,7 @@
 ---
-site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6527/preview
+site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6527/edit
 apiNotebookVersion: 1.1.66
-title: Repos (part 4)
+title: Repos part 4
 ---
 
 ```javascript
@@ -24,7 +24,7 @@ assert = chai.assert
 
 ```javascript
 
-// Read about the GitHub at https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/contracts
+// Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 
 API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
 
@@ -58,7 +58,9 @@ API.authenticate(client,"oauth_2_0",{
 
   clientId: clientId,
 
-  clientSecret: clientSecret
+  clientSecret: clientSecret,
+  
+  
 
 })
 
@@ -84,7 +86,7 @@ Let's delete a repository which could have been created during earlier notebook 
 
 ```javascript
 
-client.repos.ownerId( currentUserId ).repoId( repoId ).delete()
+client.repos.owner( currentUserId ).repo( repoId ).delete()
 
 ```
 
@@ -114,7 +116,7 @@ Create a Blob
 
 ```javascript
 
-postBlobsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.blobs.post({
+postBlobsResponse = client.repos.owner( currentUserId ).repo( repoId ).git.blobs.post({
 
   "content": "var time = new Date()//Notebook test blob",
 
@@ -148,7 +150,7 @@ base64 encode it.
 
 ```javascript
 
-blobResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.blobs.shaCode( blobShaCode ).get()
+blobResponse = client.repos.owner( currentUserId ).repo( repoId ).git.blobs.shaCode( blobShaCode ).get()
 
 ```
 
@@ -172,7 +174,7 @@ Step 1. List all commits and pick one that would become a parent.
 
 //Commit step 1
 
-commitsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).commits.get()
+commitsResponse = client.repos.owner( currentUserId ).repo( repoId ).commits.get()
 
 ```
 
@@ -210,7 +212,7 @@ Step 3. Retrieve a _tree_ array of the parent tree. This array can be understood
 
 //Commit step 3
 
-treeResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.trees.shaCode(parentTreeSha).get()
+treeResponse = client.repos.owner( currentUserId ).repo( repoId ).git.trees.shaCode(parentTreeSha).get()
 
 treeArray = treeResponse.body.tree
 
@@ -250,7 +252,7 @@ Step 5. Create a tree with the extended file list which is a descendant of the p
 
 //Commit step 5
 
-postTreesResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.trees.post({
+postTreesResponse = client.repos.owner( currentUserId ).repo( repoId ).git.trees.post({
 
   "base_tree": parentTreeSha,
 
@@ -270,7 +272,7 @@ newTreeSha = postTreesResponse.body.sha
 
 ```javascript
 
-treeResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.trees.shaCode( newTreeSha ).get()
+treeResponse = client.repos.owner( currentUserId ).repo( repoId ).git.trees.shaCode( newTreeSha ).get()
 
 ```
 
@@ -290,7 +292,7 @@ Step 6. Create a commit which is a descendant of the parent commit and refers to
 
 //Commit step 6
 
-postCommitsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.commits.post({
+postCommitsResponse = client.repos.owner( currentUserId ).repo( repoId ).git.commits.post({
 
   "message": "API Notebook test commit",
 
@@ -334,7 +336,7 @@ Get a commit.
 
 ```javascript
 
-shaCodeResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.commits.shaCode( newCommitSha ).get()
+shaCodeResponse = client.repos.owner( currentUserId ).repo( repoId ).git.commits.shaCode( newCommitSha ).get()
 
 ```
 
@@ -352,7 +354,7 @@ Get all References
 
 ```javascript
 
-refsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.refs.get()
+refsResponse = client.repos.owner( currentUserId ).repo( repoId ).git.refs.get()
 
 ```
 
@@ -372,7 +374,7 @@ Create a Reference.
 
 ref = "heads/new_test_branch"
 
-postRefsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.refs.post({
+postRefsResponse = client.repos.owner( currentUserId ).repo( repoId ).git.refs.post({
 
   "ref": "refs/" + ref,
 
@@ -398,7 +400,7 @@ Get a Reference
 
 ```javascript
 
-refResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.refs.ref( ref ).get()
+refResponse = client.repos.owner( currentUserId ).repo( repoId ).git.refs.ref( ref ).get()
 
 ```
 
@@ -420,7 +422,7 @@ Update a Reference
 
 ```javascript
 
-patchRefResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.refs.ref( ref ).patch({
+patchRefResponse = client.repos.owner( currentUserId ).repo( repoId ).git.refs.ref( ref ).patch({
 
   "sha": newCommitSha,
 
@@ -448,7 +450,7 @@ Example: Deleting a tag:        DELETE /repos/octocat/Hello-World/git/refs/tags/
 
 ```javascript
 
-deleteRefResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.refs.ref( ref ).delete()
+deleteRefResponse = client.repos.owner( currentUserId ).repo( repoId ).git.refs.ref( ref ).delete()
 
 ```
 
@@ -466,7 +468,7 @@ Get list of repository events
 
 ```javascript
 
-eventsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).events.get()
+eventsResponse = client.repos.owner( currentUserId ).repo( repoId ).events.get()
 
 ```
 
@@ -484,6 +486,6 @@ Garbage collection. Delete a repository.
 
 ```javascript
 
-client.repos.ownerId( currentUserId ).repoId( repoId ).delete()
+client.repos.owner( currentUserId ).repo( repoId ).delete()
 
 ```

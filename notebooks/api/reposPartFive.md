@@ -1,7 +1,7 @@
 ---
-site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6528/preview
+site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6528/edit
 apiNotebookVersion: 1.1.66
-title: Repos (part 5)
+title: Repos part 5
 ---
 
 ```javascript
@@ -24,7 +24,7 @@ assert = chai.assert
 
 ```javascript
 
-// Read about the GitHub at https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/contracts
+// Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 
 API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
 
@@ -84,7 +84,7 @@ Let's delete a repository which could have been created during earlier notebook 
 
 ```javascript
 
-client.repos.ownerId( currentUserId ).repoId( repoId ).delete()
+client.repos.owner( currentUserId ).repo( repoId ).delete()
 
 ```
 
@@ -108,7 +108,7 @@ postReposResponse = client.user.repos.post({
 
 ```javascript
 
-commitsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).commits.get()
+commitsResponse = client.repos.owner( currentUserId ).repo( repoId ).commits.get()
 
 assert.equal( commitsResponse.status, 200 )
 
@@ -136,7 +136,7 @@ the tag reference - this call would be unnecessary.
 
 ```javascript
 
-postTagsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.tags.post({
+postTagsResponse = client.repos.owner( currentUserId ).repo( repoId ).git.tags.post({
 
   "tag": "v0.0.1",
 
@@ -166,7 +166,7 @@ Get a Tag
 
 ```javascript
 
-tagResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.tags.shaCode( shaCode ).get()
+tagResponse = client.repos.owner( currentUserId ).repo( repoId ).git.tags.shaCode( shaCode ).get()
 
 ```
 
@@ -184,7 +184,7 @@ Get list of tags
 
 ```javascript
 
-tagsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).tags.get()
+tagsResponse = client.repos.owner( currentUserId ).repo( repoId ).tags.get()
 
 ```
 
@@ -202,7 +202,7 @@ Set a Repository Subscription
 
 ```javascript
 
-subscribeResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).subscription.put({
+subscribeResponse = client.repos.owner( currentUserId ).repo( repoId ).subscription.put({
 
   "subscribed" : true ,
 
@@ -226,7 +226,7 @@ Get a Repository Subscription
 
 ```javascript
 
-subscriptionResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).subscription.get()
+subscriptionResponse = client.repos.owner( currentUserId ).repo( repoId ).subscription.get()
 
 ```
 
@@ -244,7 +244,7 @@ Delete a Repository Subscription
 
 ```javascript
 
-subscriptionDeleteResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).subscription.delete()
+subscriptionDeleteResponse = client.repos.owner( currentUserId ).repo( repoId ).subscription.delete()
 
 ```
 
@@ -264,7 +264,7 @@ Commit a file
 
 path = "test_file.js"
 
-contentsCreatePathResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).contents.path( path ).put({
+contentsCreatePathResponse = client.repos.owner( currentUserId ).repo( repoId ).contents.path( path ).put({
 
   "message" : "This commit is performed by the API Notebook. Create file." ,
 
@@ -300,7 +300,7 @@ Here can be many outcomes. For details see "http://developer.github.com/v3/repos
 
 ```javascript
 
-contentsPathResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).contents.path( path ).get()
+contentsPathResponse = client.repos.owner( currentUserId ).repo( repoId ).contents.path( path ).get()
 
 ```
 
@@ -320,7 +320,7 @@ This method deletes a file in a repository.
 
 ```javascript
 
-deleteContentsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).contents.path( path ).delete({
+deleteContentsResponse = client.repos.owner( currentUserId ).repo( repoId ).contents.path( path ).delete({
 
   "message": "This commit is performed by the API Notebook. Delete file.",
 
@@ -344,7 +344,7 @@ List Stargazers
 
 ```javascript
 
-stargazersResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).stargazers.get()
+stargazersResponse = client.repos.owner( currentUserId ).repo( repoId ).stargazers.get()
 
 ```
 
@@ -376,7 +376,7 @@ archive_format = "zipball"
 
 path = "master"
 
-archive_formatPathResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).archive_format( archive_format ).path( path ).get()
+archive_formatPathResponse = client.repos.owner( currentUserId ).repo( repoId ).archive_format( archive_format ).path( path ).get()
 
 ```
 
@@ -394,6 +394,6 @@ Garbage collection. Delete a repository.
 
 ```javascript
 
-client.repos.ownerId( currentUserId ).repoId( repoId ).delete()
+client.repos.owner( currentUserId ).repo( repoId ).delete()
 
 ```

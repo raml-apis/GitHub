@@ -1,7 +1,7 @@
 ---
-site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6522/preview
+site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6522/edit
 apiNotebookVersion: 1.1.66
-title: GitIgnore, MD, Networks, Legacy, Emojis
+title: Gitignore, markdown, networks, legacy, emojis
 ---
 
 ```javascript
@@ -15,7 +15,7 @@ assert = chai.assert
 ```
 
 ```javascript
-// Read about the GitHub at https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/contracts
+// Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
 ```
 
@@ -87,7 +87,7 @@ ownerId = publicRepoResponse.body[0].owner.login
 List public events for a network of repositories.
 
 ```javascript
-networksEventsResponse = client.networks.ownerId( ownerId ).repoId( repoId ).events.get()
+networksEventsResponse = client.networks.owner( ownerId ).repo( repoId ).events.get()
 ```
 
 ```javascript

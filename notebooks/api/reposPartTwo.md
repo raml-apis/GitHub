@@ -1,7 +1,7 @@
 ---
-site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6525/preview
+site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6525/edit
 apiNotebookVersion: 1.1.66
-title: Repos (part 2)
+title: Repos part 2
 ---
 
 ```javascript
@@ -29,7 +29,7 @@ repoId = "API-Notebook-Test-Organization-Repository"
 ```
 
 ```javascript
-// Read about the GitHub at https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/contracts
+// Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
 ```
 
@@ -41,7 +41,8 @@ clientSecret = prompt("Please, enter your Client Secret")
 ```javascript
 API.authenticate(client,"oauth_2_0",{
   clientId: clientId,
-  clientSecret: clientSecret
+  clientSecret: clientSecret,
+  scopes: [ "admin:org", "delete_repo", "gist", "notifications", "repo", "user" ]
 })
 ```
 
@@ -50,11 +51,11 @@ Let's delete a repository which could have been created during previous notebook
 
 ```javascript
 {
-  var reposResponse = client.orgs.orgId( orgId ).repos.get()
+  var reposResponse = client.orgs.org( orgId ).repos.get()
   for(var ind in reposResponse.body){
     var key = reposResponse.body[ind]
     if(key.name == repoId){
-      client.repos.ownerId( orgId ).repoId( repoId ).delete()
+      client.repos.owner( orgId ).repo( repoId ).delete()
     }
   }
 }
@@ -63,7 +64,7 @@ Let's delete a repository which could have been created during previous notebook
 Create a repository in the organization.
 
 ```javascript
-postOrgReposResponse = client.orgs.orgId( orgId ).repos.post({
+postOrgReposResponse = client.orgs.org( orgId ).repos.post({
   "name": repoName,
   "description": "This is your first repository",
   "homepage": "https://github.com",
@@ -86,7 +87,7 @@ repoId = postOrgReposResponse.body.name
 Create a milestone
 
 ```javascript
-milestonesResponse = client.repos.ownerId( orgId ).repoId( repoId ).milestones.post({
+milestonesResponse = client.repos.owner( orgId ).repo( repoId ).milestones.post({
   "title" : "My test milestone" ,
   "state" : "open" ,
   "description" : "My first test milestone" ,
@@ -101,7 +102,7 @@ assert.equal( milestonesResponse.status, 201 )
 List milestones for a repository
 
 ```javascript
-milestonesResponse = client.repos.ownerId( orgId ).repoId( repoId ).milestones.get()
+milestonesResponse = client.repos.owner( orgId ).repo( repoId ).milestones.get()
 ```
 
 ```javascript
@@ -112,7 +113,7 @@ number = milestonesResponse.body[0].number
 Get a single milestone
 
 ```javascript
-milestoneResponse = client.repos.ownerId( orgId ).repoId( repoId ).milestones.number( number ).get()
+milestoneResponse = client.repos.owner( orgId ).repo( repoId ).milestones.number( number ).get()
 ```
 
 ```javascript
@@ -123,7 +124,7 @@ Update a milestone
 
 
 ```javascript
-patchMilestoneResponse = client.repos.ownerId( orgId ).repoId( repoId ).milestones.number( number ).patch({
+patchMilestoneResponse = client.repos.owner( orgId ).repo( repoId ).milestones.number( number ).patch({
   "description" : "API NOtebook Test Milestone"
 })
 ```
@@ -139,7 +140,7 @@ We shall use the authenticated user as assagnee.
 
 ```javascript
 currentUserId = client.user.get().body.login
-postIssueResponse = client.repos.ownerId( orgId ).repoId( repoId ).issues.post({
+postIssueResponse = client.repos.owner( orgId ).repo( repoId ).issues.post({
   "title": "Notebook test issue",
   "body": "This test issue was created by the API Notebook.",
   "assignee": currentUserId,
@@ -158,7 +159,7 @@ assert.equal( postIssueResponse.status, 201 )
 Get labels for every issue in a milestone.
 
 ```javascript
-labelsResponse = client.repos.ownerId( orgId ).repoId( repoId ).milestones.number( number ).labels.get()
+labelsResponse = client.repos.owner( orgId ).repo( repoId ).milestones.number( number ).labels.get()
 ```
 
 ```javascript
@@ -168,7 +169,7 @@ assert.equal( labelsResponse.status, 200 )
 Delete a milestone
 
 ```javascript
-deleteMilestoneResponse = client.repos.ownerId( orgId ).repoId( repoId ).milestones.number( number ).delete()
+deleteMilestoneResponse = client.repos.owner( orgId ).repo( repoId ).milestones.number( number ).delete()
 ```
 
 ```javascript
@@ -178,7 +179,7 @@ assert.equal( deleteMilestoneResponse.status, 204 )
 We need a tree in order to create a commit.
 
 ```javascript
-postTreesResponse = client.repos.ownerId( orgId ).repoId( repoId ).git.trees.post({
+postTreesResponse = client.repos.owner( orgId ).repo( repoId ).git.trees.post({
   "tree": [
     {
       "path": "file.js",
@@ -193,7 +194,7 @@ postTreesResponse = client.repos.ownerId( orgId ).repoId( repoId ).git.trees.pos
 Create a commit.
 
 ```javascript
-postCommitResponse = client.repos.ownerId( orgId ).repoId( repoId ).git.commits.post({
+postCommitResponse = client.repos.owner( orgId ).repo( repoId ).git.commits.post({
   "message": "my commit message",
   "tree": postTreesResponse.body.sha
 })
@@ -207,7 +208,7 @@ commitShaCode = postCommitResponse.body.sha
 List commits on a repository
 
 ```javascript
-commitsResponse = client.repos.ownerId( orgId ).repoId( repoId ).commits.get()
+commitsResponse = client.repos.owner( orgId ).repo( repoId ).commits.get()
 ```
 
 ```javascript
@@ -217,7 +218,7 @@ assert.equal( commitsResponse.status, 200 )
 Get a single commit
 
 ```javascript
-shaCodeResponse = client.repos.ownerId( orgId ).repoId( repoId ).commits.shaCode( commitShaCode ).get()
+shaCodeResponse = client.repos.owner( orgId ).repo( repoId ).commits.shaCode( commitShaCode ).get()
 ```
 
 ```javascript
@@ -227,7 +228,7 @@ assert.equal( shaCodeResponse.status, 200 )
 Create a commit comment
 
 ```javascript
-postCommentsResponse = client.repos.ownerId( orgId ).repoId( repoId ).commits.shaCode( commitShaCode ).comments.post({
+postCommentsResponse = client.repos.owner( orgId ).repo( repoId ).commits.shaCode( commitShaCode ).comments.post({
   "body": "New test comment",
   "sha": commitShaCode
 })
@@ -242,7 +243,7 @@ List commit comments for a repository.
 Comments are ordered by ascending ID.
 
 ```javascript
-commentsResponse = client.repos.ownerId( orgId ).repoId( repoId ).comments.get()
+commentsResponse = client.repos.owner( orgId ).repo( repoId ).comments.get()
 ```
 
 ```javascript
@@ -252,7 +253,7 @@ assert.equal( commentsResponse.status, 200 )
 Get a single commit comment
 
 ```javascript
-commentResponse = client.repos.ownerId( orgId ).repoId( repoId ).comments.commentId( commentId ).get()
+commentResponse = client.repos.owner( orgId ).repo( repoId ).comments.commentId( commentId ).get()
 ```
 
 ```javascript
@@ -262,7 +263,7 @@ assert.equal( commentResponse.status, 200 )
 Update a commit comment
 
 ```javascript
-patchCommentResponse = client.repos.ownerId( orgId ).repoId( repoId ).comments.commentId( commentId ).patch({ "body": "Comment updated." })
+patchCommentResponse = client.repos.owner( orgId ).repo( repoId ).comments.commentId( commentId ).patch({ "body": "Comment updated." })
 ```
 
 ```javascript
@@ -272,7 +273,7 @@ assert.equal( patchCommentResponse.status, 200 )
 Delete a commit comment
 
 ```javascript
-deleteCommentResponse = client.repos.ownerId( orgId ).repoId( repoId ).comments.commentId( commentId ).delete()
+deleteCommentResponse = client.repos.owner( orgId ).repo( repoId ).comments.commentId( commentId ).delete()
 ```
 
 ```javascript
@@ -284,7 +285,7 @@ List languages for the specified repository. The value on the right of a
 language is the number of bytes of code written in that language.
 
 ```javascript
-languagesResponse = client.repos.ownerId( orgId ).repoId( repoId ).languages.get()
+languagesResponse = client.repos.owner( orgId ).repo( repoId ).languages.get()
 ```
 
 ```javascript
@@ -295,7 +296,7 @@ List your notifications in a repository
 List all notifications for the current user.
 
 ```javascript
-notificationsResponse = client.repos.ownerId( orgId ).repoId( repoId ).notifications.get({"all": true })
+notificationsResponse = client.repos.owner( orgId ).repo( repoId ).notifications.get({"all": true })
 ```
 
 ```javascript
@@ -307,7 +308,7 @@ Marking all notifications in a repository as "read" removes them from the
 default view on GitHub.com.
 
 ```javascript
-putNotificationsResponse = client.repos.ownerId( orgId ).repoId( repoId ).notifications.put({})
+putNotificationsResponse = client.repos.owner( orgId ).repo( repoId ).notifications.put({})
 ```
 
 ```javascript
@@ -319,7 +320,7 @@ This call lists all the available assignees (owner + collaborators) to which
 issues may be assigned.
 
 ```javascript
-assigneesResponse = client.repos.ownerId( orgId ).repoId( repoId ).assignees.get()
+assigneesResponse = client.repos.owner( orgId ).repo( repoId ).assignees.get()
 ```
 
 ```javascript
@@ -331,7 +332,7 @@ Check assignee.
 You may also check to see if a particular user is an assignee for a repository.
 
 ```javascript
-assigneeResponse = client.repos.ownerId( orgId ).repoId( repoId ).assignees.assignee( assignee ).get()
+assigneeResponse = client.repos.owner( orgId ).repo( repoId ).assignees.assignee( assignee ).get()
 ```
 
 ```javascript
@@ -341,7 +342,7 @@ assert.equal( assigneeResponse.status, 204 )
 Get list of branche
 
 ```javascript
-branchesResponse = client.repos.ownerId( orgId ).repoId( repoId ).branches.get()
+branchesResponse = client.repos.owner( orgId ).repo( repoId ).branches.get()
 ```
 
 ```javascript
@@ -352,7 +353,7 @@ branchId = branchesResponse.body[0].name
 Get Branche
 
 ```javascript
-branchResponse = client.repos.ownerId( orgId ).repoId( repoId ).branches.branchId( branchId ).get()
+branchResponse = client.repos.owner( orgId ).repo( repoId ).branches.branch( branchId ).get()
 ```
 
 ```javascript
@@ -362,7 +363,7 @@ assert.equal( branchResponse.status, 200 )
 List comments for a single commitList comments for a single commit
 
 ```javascript
-commentsResponse = client.repos.ownerId( orgId ).repoId( repoId ).commits.shaCode( commitShaCode ).comments.get()
+commentsResponse = client.repos.owner( orgId ).repo( repoId ).commits.shaCode( commitShaCode ).comments.get()
 ```
 
 ```javascript
@@ -373,7 +374,7 @@ Create a label
 
 ```javascript
 labelName = "API Notebook"
-labelsResponse = client.repos.ownerId( orgId ).repoId( repoId ).labels.post({
+labelsResponse = client.repos.owner( orgId ).repo( repoId ).labels.post({
   "name": labelName,
   "color": "FFFFFF"
 })
@@ -386,7 +387,7 @@ assert.equal( labelsResponse.status, 201 )
 List all labels for this repository
 
 ```javascript
-labelsResponse = client.repos.ownerId( orgId ).repoId( repoId ).labels.get()
+labelsResponse = client.repos.owner( orgId ).repo( repoId ).labels.get()
 ```
 
 ```javascript
@@ -396,7 +397,7 @@ assert.equal( labelsResponse.status, 200 )
 Get a single label
 
 ```javascript
-labelNameResponse = client.repos.ownerId( orgId ).repoId( repoId ).labels.name( labelName ).get()
+labelNameResponse = client.repos.owner( orgId ).repo( repoId ).labels.name( labelName ).get()
 ```
 
 ```javascript
@@ -406,7 +407,7 @@ assert.equal( labelNameResponse.status, 200 )
 Update a label
 
 ```javascript
-patchLabelResponse = client.repos.ownerId( orgId ).repoId( repoId ).labels.name( labelName ).patch({
+patchLabelResponse = client.repos.owner( orgId ).repo( repoId ).labels.name( labelName ).patch({
   "name": labelName +" updated",
   "color": "DDDDDD"
 })
@@ -420,7 +421,7 @@ Delete a label
 
 ```javascript
 newLabelName = patchLabelResponse.body.name
-deleteLabelResponse = client.repos.ownerId( orgId ).repoId( repoId ).labels.name( newLabelName ).delete()
+deleteLabelResponse = client.repos.owner( orgId ).repo( repoId ).labels.name( newLabelName ).delete()
 ```
 
 ```javascript
@@ -431,7 +432,7 @@ Get the README.
 This method returns the preferred README for a repository.
 
 ```javascript
-readmeResponse = client.repos.ownerId( orgId ).repoId( repoId ).readme.get()
+readmeResponse = client.repos.owner( orgId ).repo( repoId ).readme.get()
 ```
 
 ```javascript
@@ -441,7 +442,7 @@ assert.equal( readmeResponse.status, 200 )
 Get list of team
 
 ```javascript
-teamsResponse = client.repos.ownerId( orgId ).repoId( repoId ).teams.get()
+teamsResponse = client.repos.owner( orgId ).repo( repoId ).teams.get()
 ```
 
 ```javascript
@@ -451,7 +452,7 @@ assert.equal( teamsResponse.status, 200 )
 List watchers
 
 ```javascript
-subscribersResponse = client.repos.ownerId( orgId ).repoId( repoId ).subscribers.get()
+subscribersResponse = client.repos.owner( orgId ).repo( repoId ).subscribers.get()
 ```
 
 ```javascript
@@ -461,7 +462,7 @@ assert.equal( subscribersResponse.status, 200 )
 Get list of contributors
 
 ```javascript
-contributorsResponse = client.repos.ownerId( orgId ).repoId( repoId ).contributors.get()
+contributorsResponse = client.repos.owner( orgId ).repo( repoId ).contributors.get()
 ```
 
 ```javascript
@@ -471,7 +472,7 @@ assert.equal( contributorsResponse.status, 200 )
 Get the weekly commit count for the repo owner and everyone else
 
 ```javascript
-participationResponse = client.repos.ownerId( orgId ).repoId( repoId ).stats.participation.get()
+participationResponse = client.repos.owner( orgId ).repo( repoId ).stats.participation.get()
 ```
 
 ```javascript
@@ -483,7 +484,7 @@ Returns the last year of commit activity grouped by week. The days array
 is a group of commits per day, starting on Sunday.
 
 ```javascript
-commitActivityResponse = client.repos.ownerId( orgId ).repoId( repoId ).stats.commit_activity.get()
+commitActivityResponse = client.repos.owner( orgId ).repo( repoId ).stats.commit_activity.get()
 ```
 
 ```javascript
@@ -493,7 +494,7 @@ assert( commitActivityResponse.status == 200 || commitActivityResponse.status ==
 Get contributors list with additions, deletions, and commit counts
 
 ```javascript
-contributorsResponse = client.repos.ownerId( orgId ).repoId( repoId ).stats.contributors.get()
+contributorsResponse = client.repos.owner( orgId ).repo( repoId ).stats.contributors.get()
 ```
 
 ```javascript
@@ -511,7 +512,7 @@ the 2.00pm hour on Tuesdays. All times are based on the time zone of
 individual commits.
 
 ```javascript
-punchCardResponse = client.repos.ownerId( orgId ).repoId( repoId ).stats.punch_card.get()
+punchCardResponse = client.repos.owner( orgId ).repo( repoId ).stats.punch_card.get()
 ```
 
 ```javascript
@@ -523,7 +524,7 @@ Returns a weekly aggregate of the number of additions and deletions pushed
 to a repository.
 
 ```javascript
-codeFrequencyResponse = client.repos.ownerId( orgId ).repoId( repoId ).stats.code_frequency.get()
+codeFrequencyResponse = client.repos.owner( orgId ).repo( repoId ).stats.code_frequency.get()
 ```
 
 ```javascript
@@ -533,7 +534,7 @@ assert( codeFrequencyResponse.status == 200 || codeFrequencyResponse.status == 2
 Delete a repository.
 
 ```javascript
-deleteRepoResponse = client.repos.ownerId(orgId).repoId(repoId).delete()
+deleteRepoResponse = client.repos.owner(orgId).repo(repoId).delete()
 ```
 
 ```javascript
