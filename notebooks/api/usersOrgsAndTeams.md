@@ -429,11 +429,11 @@ assert.equal( patchTeamResponse.status, 200 )
 
 
 Add team membership.
-In order to add a membership between a user and a team, the authenticated user must have ‘admin’ permissions to the team or be an owner of the organization that the team is associated with.
+In order to add a membership between a user and a team, the authenticated user must have 'admin' permissions to the team or be an owner of the organization that the team is associated with.
 
 If the user is already a part of the team’s organization (meaning they’re on at least one other team in the organization), this endpoint will add the user to the team.
 
-If the user is completely unaffiliated with the team’s organization (meaning they’re on none of the organization’s teams), this endpoint will send an invitation to the user via email. This newly-created membership will be in the “pending” state until the user accepts the invitation, at which point the membership will transition to the “active” state and the user will be added as a member of the team.
+If the user is completely unaffiliated with the team’s organization (meaning they’re on none of the organization’s teams), this endpoint will send an invitation to the user via email. This newly-created membership will be in the "pending" state until the user accepts the invitation, at which point the membership will transition to the "active" state and the user will be added as a member of the team.
 
 ```javascript
 addTeamMemberResponse = client.teams.teamId( teamId ).memberships.username( notebookUserId ).put()
@@ -467,7 +467,7 @@ assert.equal( teamMemberResponse.status, 200 )
 ```
 
 Remove team membership.
-In order to remove a membership between a user and a team, the authenticated user must have ‘admin’ permissions to the team or be an owner of the organization that the team is associated with. NOTE: This does not delete the user, it just removes their membership from the team.
+In order to remove a membership between a user and a team, the authenticated user must have 'admin' permissions to the team or be an owner of the organization that the team is associated with. NOTE: This does not delete the user, it just removes their membership from the team.
 
 ```javascript
 deleteTeamMemberResponse = client.teams.teamId( teamId ).memberships.username( notebookUserId ).delete()
