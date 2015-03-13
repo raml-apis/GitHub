@@ -1,7 +1,7 @@
 ---
-site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6521/preview
+site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6521/edit
 apiNotebookVersion: 1.1.66
-title: Search, Events, Feeds, Notifications
+title: Search, events, feeds, meta, notifications
 ---
 
 ```javascript
@@ -15,7 +15,7 @@ assert = chai.assert
 ```
 
 ```javascript
-// Read about the GitHub at https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/contracts
+// Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
 ```
 

@@ -1,7 +1,7 @@
 ---
-site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6526/preview
+site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6526/edit
 apiNotebookVersion: 1.1.66
-title: Repos (part 3)
+title: Repos part 3
 ---
 
 ```javascript
@@ -38,7 +38,7 @@ repoId = "API-Notebook-Test-Repository-3"
 
 ```javascript
 
-// Read about the GitHub at https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/contracts
+// Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 
 API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
 
@@ -84,7 +84,7 @@ Let's delete a repository which could have been created during earlier notebook 
 
 ```javascript
 
-client.repos.ownerId( currentUserId ).repoId( repoId ).delete()
+client.repos.owner( currentUserId ).repo( repoId ).delete()
 
 ```
 
@@ -114,7 +114,7 @@ List Stargazers. New implementation
 
 ```javascript
 
-watchersResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).watchers.get()
+watchersResponse = client.repos.owner( currentUserId ).repo( repoId ).watchers.get()
 
 ```
 
@@ -132,7 +132,7 @@ Let's pick a commit.
 
 ```javascript
 
-commitsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).commits.get()
+commitsResponse = client.repos.owner( currentUserId ).repo( repoId ).commits.get()
 
 commitSha = commitsResponse.body[0].sha
 
@@ -146,7 +146,7 @@ Now we can create a status.
 
 ```javascript
 
-postStatusesRefResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).statuses.ref( commitSha ).post({
+postStatusesRefResponse = client.repos.owner( currentUserId ).repo( repoId ).statuses.ref( commitSha ).post({
 
   "state": "success",
 
@@ -182,7 +182,7 @@ Users with pull access can view commit statuses for a given ref
 
 ```javascript
 
-statusesResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).statuses.ref( commitSha ).get({
+statusesResponse = client.repos.owner( currentUserId ).repo( repoId ).statuses.ref( commitSha ).get({
 
   headers: {
 
@@ -208,7 +208,7 @@ List downloads for a repository
 
 ```javascript
 
-downloadsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).downloads.get()
+downloadsResponse = client.repos.owner( currentUserId ).repo( repoId ).downloads.get()
 
 ```
 
@@ -226,7 +226,7 @@ We need a new branch for our tests.
 
 ```javascript
 
-newBranchResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.refs.post({
+newBranchResponse = client.repos.owner( currentUserId ).repo( repoId ).git.refs.post({
 
   ref: "refs/heads/new_test_branch",
 
@@ -244,7 +244,7 @@ Perform a merge
 
 ```javascript
 
-mergesResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).merges.post({
+mergesResponse = client.repos.owner( currentUserId ).repo( repoId ).merges.post({
 
   "base" : "master" ,
 
@@ -270,7 +270,7 @@ List issues for a repository
 
 ```javascript
 
-issuesResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.get({
+issuesResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.get({
 
   "filter": "all",
 
@@ -296,7 +296,7 @@ Any user with pull access to a repository can create an issue.
 
 ```javascript
 
-postIssuesResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.post({
+postIssuesResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.post({
 
   "title" : "Notebook Test Issue" ,
 
@@ -332,7 +332,7 @@ Get a single issue
 
 ```javascript
 
-numberResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).get()
+numberResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).get()
 
 ```
 
@@ -352,7 +352,7 @@ Issue owners and users with push access can edit an issue.
 
 ```javascript
 
-patchIssueResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).patch({
+patchIssueResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).patch({
 
   "title" : issue.title + " Updated1",
 
@@ -386,7 +386,7 @@ List issue events for a repository
 
 ```javascript
 
-eventsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.events.get()
+eventsResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.events.get()
 
 ```
 
@@ -406,7 +406,7 @@ Get a single event
 
 ```javascript
 
-eventResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.events.eventId( eventId ).get()
+eventResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.events.eventId( eventId ).get()
 
 ```
 
@@ -424,7 +424,7 @@ List events for an issue.
 
 ```javascript
 
-eventsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).events.get()
+eventsResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).events.get()
 
 ```
 
@@ -442,7 +442,7 @@ List labels on an issue
 
 ```javascript
 
-labelsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).labels.get()
+labelsResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).labels.get()
 
 ```
 
@@ -462,7 +462,7 @@ Sending an empty array ([]) will remove all Labels from the Issue.
 
 ```javascript
 
-putLabelsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).labels.put([
+putLabelsResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).labels.put([
 
   "Notebook L2" ,
 
@@ -488,7 +488,7 @@ Add labels to an issue
 
 newIssueLabel = "New Test Label" 
 
-postLabelsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).labels.post([ newIssueLabel ])
+postLabelsResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).labels.post([ newIssueLabel ])
 
 ```
 
@@ -506,7 +506,7 @@ Remove a label from an issue
 
 ```javascript
 
-deleteLabelResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).labels.name( newIssueLabel ).delete({})
+deleteLabelResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).labels.name( newIssueLabel ).delete({})
 
 ```
 
@@ -524,7 +524,7 @@ Remove all labels from an issue
 
 ```javascript
 
-deleteLabelsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).labels.delete()
+deleteLabelsResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).labels.delete()
 
 ```
 
@@ -542,7 +542,7 @@ Create a comment
 
 ```javascript
 
-postCommentsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).comments.post({
+postCommentsResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).comments.post({
 
   "body": "This comment was created by the API Notebook."
 
@@ -566,7 +566,7 @@ List comments on an issue
 
 ```javascript
 
-issueCommentsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.number( number ).comments.get()
+issueCommentsResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.number( number ).comments.get()
 
 ```
 
@@ -584,7 +584,7 @@ List comments in a repository
 
 ```javascript
 
-issuesCommentsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.comments.get()
+issuesCommentsResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.comments.get()
 
 ```
 
@@ -602,7 +602,7 @@ Get a single comment
 
 ```javascript
 
-commentResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.comments.commentId( commentId ).get()
+commentResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.comments.commentId( commentId ).get()
 
 ```
 
@@ -620,7 +620,7 @@ Edit a comment
 
 ```javascript
 
-patchCommenResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.comments.commentId( commentId ).patch({
+patchCommenResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.comments.commentId( commentId ).patch({
 
   "body": commentResponse.body.body + " Updated."
 
@@ -642,7 +642,7 @@ Delete a comment
 
 ```javascript
 
-deleteCommentResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).issues.comments.commentId( commentId ).delete()
+deleteCommentResponse = client.repos.owner( currentUserId ).repo( repoId ).issues.comments.commentId( commentId ).delete()
 
 ```
 
@@ -660,6 +660,6 @@ Garbage collection. Delete a repository.
 
 ```javascript
 
-client.repos.ownerId( currentUserId ).repoId( repoId ).delete()
+client.repos.owner( currentUserId ).repo( repoId ).delete()
 
 ```

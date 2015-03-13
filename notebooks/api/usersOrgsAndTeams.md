@@ -1,7 +1,7 @@
 ---
-site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6520/preview
+site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6520/edit
 apiNotebookVersion: 1.1.66
-title: Users, Orgs and Teams
+title: Users, orgs and teams
 ---
 
 ```javascript
@@ -33,7 +33,7 @@ repoId = "API-Notebook-Test-Organization-Repository-8"
 ```
 
 ```javascript
-// Read about the GitHub at https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/contracts
+// Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
 ```
 
@@ -45,7 +45,8 @@ clientSecret = prompt("Please, enter your Client Secret")
 ```javascript
 API.authenticate(client,"oauth_2_0",{
   clientId: clientId,
-  clientSecret: clientSecret
+  clientSecret: clientSecret,
+  scopes: [ "admin:org", "delete_repo", "gist", "notifications", "repo", "user" ]
 })
 ```
 
@@ -72,7 +73,7 @@ currentUserId = currentUserResponse.body.login
 Get a single user
 
 ```javascript
-userResponse = client.users.userId( currentUserId ).get()
+userResponse = client.users.username( currentUserId ).get()
 ```
 
 ```javascript
@@ -82,7 +83,7 @@ assert.equal( userResponse.status, 200 )
 List public repositories for the specified user
 
 ```javascript
-reposResponse = client.users.userId( currentUserId ).repos.get()
+reposResponse = client.users.username( currentUserId ).repos.get()
 ```
 
 ```javascript
@@ -92,7 +93,7 @@ assert.equal( reposResponse.status, 200 )
 List all public organizations for a user
 
 ```javascript
-orgsResponse = client.users.userId( currentUserId ).orgs.get()
+orgsResponse = client.users.username( currentUserId ).orgs.get()
 ```
 
 ```javascript
@@ -102,7 +103,7 @@ assert.equal( orgsResponse.status, 200 )
 List a users gists
 
 ```javascript
-gistsResponse = client.users.userId( currentUserId ).gists.get()
+gistsResponse = client.users.username( currentUserId ).gists.get()
 ```
 
 ```javascript
@@ -112,13 +113,13 @@ assert.equal( gistsResponse.status, 200 )
 Let's follow the api notebook test user, so that the subsequent check would have positive result.  
 
 ```javascript
-putFollowResponse = client.user.following.userId( notebookUserId ).put()
+putFollowResponse = client.user.following.username( notebookUserId ).put()
 ```
 
 Check if one user follows another
 
 ```javascript
-followingResponse = client.users.userId( currentUserId ).following.targetUserId( notebookUserId ).get()
+followingResponse = client.users.username( currentUserId ).following.targetUser( notebookUserId ).get()
 ```
 
 ```javascript
@@ -128,14 +129,14 @@ assert.equal( followingResponse.status, 204 )
 Now let's unfollow the api notebook test user.
 
 ```javascript
-deleteFollowResponse = client.user.following.userId( notebookUserId ).delete()
+deleteFollowResponse = client.user.following.username( notebookUserId ).delete()
 ```
 
 List public keys for a user.
 Lists the verified public keys for a user. This is accessible by anyone.
 
 ```javascript
-keysResponse = client.users.userId( currentUserId ).keys.get()
+keysResponse = client.users.username( currentUserId ).keys.get()
 ```
 
 ```javascript
@@ -145,7 +146,7 @@ assert.equal( keysResponse.status, 200 )
 If you are authenticated as the given user, you will see your private events. Otherwise, you'll only see public events
 
 ```javascript
-eventsResponse = client.users.userId( currentUserId ).events.get()
+eventsResponse = client.users.username( currentUserId ).events.get()
 ```
 
 ```javascript
@@ -165,7 +166,7 @@ assert.equal( currentUserOrgResponse.status, 200 )
 This is the user's organization dashboard. You must be authenticated as the user to view this.
 
 ```javascript
-orgEventResponse = client.users.userId( currentUserId ).events.orgs.org( orgId ).get()
+orgEventResponse = client.users.username( currentUserId ).events.orgs.org( orgId ).get()
 ```
 
 ```javascript
@@ -175,7 +176,7 @@ assert.equal( orgEventResponse.status, 200 )
 These are events that you'll only see public events
 
 ```javascript
-received_eventsResponse = client.users.userId( currentUserId ).received_events.get()
+received_eventsResponse = client.users.username( currentUserId ).received_events.get()
 ```
 
 ```javascript
@@ -185,7 +186,7 @@ assert.equal( received_eventsResponse.status, 200 )
 List public events that a user has receive
 
 ```javascript
-received_eventsResponse = client.users.userId( currentUserId ).received_events.public.get()
+received_eventsResponse = client.users.username( currentUserId ).received_events.public.get()
 ```
 
 ```javascript
@@ -195,7 +196,7 @@ assert.equal( received_eventsResponse.status, 200 )
 List repositories being starred by a user
 
 ```javascript
-starredResponse = client.users.userId( currentUserId ).starred.get()
+starredResponse = client.users.username( currentUserId ).starred.get()
 ```
 
 ```javascript
@@ -205,7 +206,7 @@ assert.equal( starredResponse.status, 200 )
 List repositories being watched by a user
 
 ```javascript
-subscriptionsResponse = client.users.userId( currentUserId ).subscriptions.get()
+subscriptionsResponse = client.users.username( currentUserId ).subscriptions.get()
 ```
 
 ```javascript
@@ -215,7 +216,7 @@ assert.equal( subscriptionsResponse.status, 200 )
 List a user's follower
 
 ```javascript
-followersResponse = client.users.userId( currentUserId ).followers.get()
+followersResponse = client.users.username( currentUserId ).followers.get()
 ```
 
 ```javascript
@@ -225,7 +226,7 @@ assert.equal( followersResponse.status, 200 )
 Get an Organization
 
 ```javascript
-orgResponse = client.orgs.orgId( orgId ).get()
+orgResponse = client.orgs.org( orgId ).get()
 ```
 
 ```javascript
@@ -235,7 +236,7 @@ assert.equal( orgResponse.status, 200 )
 Edit an Organization
 
 ```javascript
-orgUpdateResponse = client.orgs.orgId( orgId ).patch({
+orgUpdateResponse = client.orgs.org( orgId ).patch({
   "name": orgId
 })
 ```
@@ -252,7 +253,7 @@ will be returned. If the requester is not an owner of the organization the
 query will be redirected to the public members list.
 
 ```javascript
-membersResponse = client.orgs.orgId( orgId ).members.get()
+membersResponse = client.orgs.org( orgId ).members.get()
 ```
 
 ```javascript
@@ -262,7 +263,7 @@ assert.equal( membersResponse.status, 200 )
 Check if a user is, publicly or privately, a member of the organization
 
 ```javascript
-memberResponse = client.orgs.orgId( orgId ).members.userId( currentUserId ).get()
+memberResponse = client.orgs.org( orgId ).members.username( currentUserId ).get()
 ```
 
 ```javascript
@@ -272,7 +273,7 @@ assert.equal( memberResponse.status, 204 )
 List repositories for the specified org
 
 ```javascript
-reposResponse = client.orgs.orgId( orgId ).repos.get()
+reposResponse = client.orgs.org( orgId ).repos.get()
 ```
 
 ```javascript
@@ -282,13 +283,13 @@ assert.equal( reposResponse.status, 200 )
 Let's delete a repository which could have been created during earlier notebook runs.
 
 ```javascript
-client.repos.ownerId( orgId ).repoId( repoId ).delete()
+client.repos.owner( orgId ).repo( repoId ).delete()
 ```
 
-This is the user’s organization dashboard. You must be authenticated as the user to view this.
+This is the user�s organization dashboard. You must be authenticated as the user to view this.
 
 ```javascript
-postReposResponse = client.orgs.orgId( orgId ).repos.post({
+postReposResponse = client.orgs.org( orgId ).repos.post({
   "name": repoName
 })
 ```
@@ -300,7 +301,7 @@ assert.equal( postReposResponse.status, 201 )
 List teams
 
 ```javascript
-teamsResponse = client.orgs.orgId( orgId ).teams.get()
+teamsResponse = client.orgs.org( orgId ).teams.get()
 ```
 
 ```javascript
@@ -322,7 +323,7 @@ for(var ind in teamsResponse.body){
 Create team. In order to create a team, the authenticated user must be an owner of orgId.
 
 ```javascript
-postTeamsResponse = client.orgs.orgId( orgId ).teams.post({
+postTeamsResponse = client.orgs.org( orgId ).teams.post({
   "name": "Test Notebook Team",
   "repo_names": [ repoName ],
   "permission": "pull"
@@ -337,7 +338,7 @@ teamId = postTeamsResponse.body.id
 Publicize a user's membership
 
 ```javascript
-putPublic_membersResponse = client.orgs.orgId( orgId ).public_members.userId( currentUserId ).put()
+putPublic_membersResponse = client.orgs.org( orgId ).public_members.username( currentUserId ).put()
 ```
 
 ```javascript
@@ -349,7 +350,7 @@ Members of an organization can choose to have their membership publicized
 or not.
 
 ```javascript
-publicMembersResponse = client.orgs.orgId( orgId ).public_members.get()
+publicMembersResponse = client.orgs.org( orgId ).public_members.get()
 ```
 
 ```javascript
@@ -359,7 +360,7 @@ assert.equal( publicMembersResponse.status, 200 )
 Check public membership
 
 ```javascript
-checkPublicMemberResponse = client.orgs.orgId( orgId ).public_members.userId( currentUserId ).get()
+checkPublicMemberResponse = client.orgs.org( orgId ).public_members.username( currentUserId ).get()
 ```
 
 ```javascript
@@ -369,7 +370,7 @@ assert.equal( checkPublicMemberResponse.status, 204 )
 Conceal a user's membership
 
 ```javascript
-deletePublicMemberResponse = client.orgs.orgId( orgId ).public_members.userId( currentUserId ).delete()
+deletePublicMemberResponse = client.orgs.org( orgId ).public_members.username( currentUserId ).delete()
 ```
 
 ```javascript
@@ -379,7 +380,7 @@ assert.equal( deletePublicMemberResponse.status, 204 )
 List public events for an organization
 
 ```javascript
-eventsResponse = client.orgs.orgId( orgId ).events.get()
+eventsResponse = client.orgs.org( orgId ).events.get()
 ```
 
 ```javascript
@@ -390,7 +391,7 @@ List issues.
 List all issues for a given organization for the authenticated user.
 
 ```javascript
-issuesResponse = client.orgs.orgId( orgId ).issues.get({
+issuesResponse = client.orgs.org( orgId ).issues.get({
   "filter": "all",
   "sort": "created",
 })
@@ -403,7 +404,7 @@ assert.equal( issuesResponse.status, 200 )
 Get team
 
 ```javascript
-teamResponse = client.teams.teamsId( teamId ).get()
+teamResponse = client.teams.teamId( teamId ).get()
 ```
 
 ```javascript
@@ -415,7 +416,7 @@ In order to edit a team, the authenticated user must be an owner of the org
 that the team is associated with.
 
 ```javascript
-patchTeamResponse = client.teams.teamsId( teamId ).patch({
+patchTeamResponse = client.teams.teamId( teamId ).patch({
   "name": teamResponse.body.name + " Updated",
   "permission": "admin"
 })
@@ -428,14 +429,14 @@ assert.equal( patchTeamResponse.status, 200 )
 
 
 Add team membership.
-In order to add a membership between a user and a team, the authenticated user must have ‘admin’ permissions to the team or be an owner of the organization that the team is associated with.
+In order to add a membership between a user and a team, the authenticated user must have 'admin' permissions to the team or be an owner of the organization that the team is associated with.
 
-If the user is already a part of the team’s organization (meaning they’re on at least one other team in the organization), this endpoint will add the user to the team.
+If the user is already a part of the team�s organization (meaning they�re on at least one other team in the organization), this endpoint will add the user to the team.
 
-If the user is completely unaffiliated with the team’s organization (meaning they’re on none of the organization’s teams), this endpoint will send an invitation to the user via email. This newly-created membership will be in the “pending” state until the user accepts the invitation, at which point the membership will transition to the “active” state and the user will be added as a member of the team.
+If the user is completely unaffiliated with the team�s organization (meaning they�re on none of the organization�s teams), this endpoint will send an invitation to the user via email. This newly-created membership will be in the "pending" state until the user accepts the invitation, at which point the membership will transition to the "active" state and the user will be added as a member of the team.
 
 ```javascript
-addTeamMemberResponse = client.teams.teamsId( teamId ).memberships.userId( notebookUserId ).put()
+addTeamMemberResponse = client.teams.teamId( teamId ).memberships.username( notebookUserId ).put()
 ```
 
 ```javascript
@@ -447,7 +448,7 @@ In order to list members in a team, the authenticated user must be a member
 of the team.
 
 ```javascript
-teamMembersResponse = client.teams.teamsId( teamId ).members.get()
+teamMembersResponse = client.teams.teamId( teamId ).members.get()
 ```
 
 ```javascript
@@ -455,10 +456,10 @@ assert.equal( teamMembersResponse.status, 200 )
 ```
 
 Get team membership.
-In order to get a user’s membership with a team, the authenticated user must be a member of the team or an owner of the team’s organization.
+In order to get a user�s membership with a team, the authenticated user must be a member of the team or an owner of the team�s organization.
 
 ```javascript
-teamMemberResponse = client.teams.teamsId( teamId ).memberships.userId( notebookUserId ).get()
+teamMemberResponse = client.teams.teamId( teamId ).memberships.username( notebookUserId ).get()
 ```
 
 ```javascript
@@ -466,10 +467,10 @@ assert.equal( teamMemberResponse.status, 200 )
 ```
 
 Remove team membership.
-In order to remove a membership between a user and a team, the authenticated user must have ‘admin’ permissions to the team or be an owner of the organization that the team is associated with. NOTE: This does not delete the user, it just removes their membership from the team.
+In order to remove a membership between a user and a team, the authenticated user must have 'admin' permissions to the team or be an owner of the organization that the team is associated with. NOTE: This does not delete the user, it just removes their membership from the team.
 
 ```javascript
-deleteTeamMemberResponse = client.teams.teamsId( teamId ).memberships.userId( notebookUserId ).delete()
+deleteTeamMemberResponse = client.teams.teamId( teamId ).memberships.username( notebookUserId ).delete()
 ```
 
 ```javascript
@@ -479,7 +480,7 @@ assert.equal( deleteTeamMemberResponse.status, 204 )
 List team repos
 
 ```javascript
-reposResponse = client.teams.teamsId( teamId ).repos.get()
+reposResponse = client.teams.teamId( teamId ).repos.get()
 ```
 
 ```javascript
@@ -489,7 +490,7 @@ assert.equal( reposResponse.status, 200 )
 In order to remove a repository from a team, the authenticated user must be an owner of the org that the team is associated with. NOTE: This does not delete the repository, it just removes it from the team
 
 ```javascript
-deleteManagerResponse = client.teams.teamsId( teamId ).repos.ownerId( orgId ).repoId( repoId ).delete()
+deleteManagerResponse = client.teams.teamId( teamId ).repos.owner( orgId ).repo( repoId ).delete()
 ```
 
 ```javascript
@@ -499,7 +500,7 @@ assert.equal( deleteManagerResponse.status, 204 )
 In order to add a repository to a team, the authenticated user must be an owner of the org that the team is associated with. Also, the repository must be owned by the organization, or a direct fork of a repository owned by the organization
 
 ```javascript
-putManagerResponse = client.teams.teamsId( teamId ).repos.orgId( orgId ).repoId( repoId ).put()
+putManagerResponse = client.teams.teamId( teamId ).repos.org( orgId ).repo( repoId ).put()
 ```
 
 ```javascript
@@ -509,7 +510,7 @@ assert.equal( putManagerResponse.status, 204 )
 Check if a team manages a repositor
 
 ```javascript
- managesRepoResponse = client.teams.teamsId( teamId ).repos.ownerId( orgId ).repoId( repoId ).get()
+ managesRepoResponse = client.teams.teamId( teamId ).repos.owner( orgId ).repo( repoId ).get()
 ```
 
 ```javascript
@@ -519,7 +520,7 @@ assert.equal( managesRepoResponse.status, 204 )
 Add the user to the team once again
 
 ```javascript
-addTeamMemberResponse = client.teams.teamsId( teamId ).memberships.userId( notebookUserId ).put()
+addTeamMemberResponse = client.teams.teamId( teamId ).memberships.username( notebookUserId ).put()
 ```
 
 ```javascript
@@ -531,7 +532,7 @@ Removing a user from this list will remove them from all teams and they
 will no longer have any access to the organization's repositories.
 
 ```javascript
-deleteMemberResponse = client.orgs.orgId( orgId ).members.userId( notebookUserId ).delete()
+deleteMemberResponse = client.orgs.org( orgId ).members.username( notebookUserId ).delete()
 ```
 
 ```javascript
@@ -543,7 +544,7 @@ In order to delete a team, the authenticated user must be an owner of the
 org that the team is associated with.
 
 ```javascript
-deleteTeamResponse = client.teams.teamsId( teamId ).delete()
+deleteTeamResponse = client.teams.teamId( teamId ).delete()
 ```
 
 ```javascript
@@ -553,5 +554,5 @@ assert.equal( deleteTeamResponse.status, 204 )
 Garbage collection. Delete a repository.
 
 ```javascript
-deleteRepResponse = client.repos.ownerId( orgId ).repoId( repoId ).delete()
+deleteRepResponse = client.repos.owner( orgId ).repo( repoId ).delete()
 ```

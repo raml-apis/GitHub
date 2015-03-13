@@ -1,7 +1,7 @@
 ---
-site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6529/preview
+site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6529/edit
 apiNotebookVersion: 1.1.66
-title: Repos (part 6)
+title: Repos part 6
 ---
 
 ```javascript
@@ -46,7 +46,7 @@ clientSecret = prompt("Please, enter your Client Secret")
 
 ```javascript
 
-// Read about the GitHub at https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/contracts
+// Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 
 API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
 
@@ -102,7 +102,7 @@ Let's delete a repository which could have been created during earlier notebook 
 
 ```javascript
 
-client.repos.ownerId( currentUserId ).repoId( repoId ).delete()
+client.repos.owner( currentUserId ).repo( repoId ).delete()
 
 ```
 
@@ -138,7 +138,7 @@ minutes, be sure to contact Support.
 
 ```javascript
 
-postForksResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).forks.post()
+postForksResponse = client.repos.owner( currentUserId ).repo( repoId ).forks.post()
 
 ```
 
@@ -156,7 +156,7 @@ List forks
 
 ```javascript
 
-forksResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).forks.get()
+forksResponse = client.repos.owner( currentUserId ).repo( repoId ).forks.get()
 
 ```
 
@@ -174,7 +174,7 @@ Pick the initial commit.
 
 ```javascript
 
-commitsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).commits.get()
+commitsResponse = client.repos.owner( currentUserId ).repo( repoId ).commits.get()
 
 assert.equal( commitsResponse.status, 200 )
 
@@ -198,7 +198,7 @@ newRef = "refs/heads/" + newBranch
 
 ```javascript
 
-newBranchResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).git.refs.post({
+newBranchResponse = client.repos.owner( currentUserId ).repo( repoId ).git.refs.post({
 
   ref: newRef,
 
@@ -218,7 +218,7 @@ Commit a file into the new branch.
 
 path = "test_file.js"
 
-contentsCreatePathResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).contents.path( path ).put({
+contentsCreatePathResponse = client.repos.owner( currentUserId ).repo( repoId ).contents.path( path ).put({
 
   "message" : "This commit is performed by the API Notebook. Create file." ,
 
@@ -240,11 +240,11 @@ Compare two commits
 
 ```javascript
 
-commitsCompareResponse = client("/repos/{ownerId}/{repoId}/compare/{baseId}...{headId}",{
+commitsCompareResponse = client("/repos/{owner}/{repo}/compare/{baseId}...{headId}",{
 
-  "ownerId": currentUserId,
+  "owner": currentUserId,
 
-  "repoId": repoId,
+  "repo": repoId,
 
   "baseId": "master",
 
@@ -268,7 +268,7 @@ Users with pull access can view deployments for a repository
 
 ```javascript
 
-deploymentsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).deployments.get({}, {
+deploymentsResponse = client.repos.owner( currentUserId ).repo( repoId ).deployments.get({}, {
 
   headers: {
 
@@ -294,7 +294,7 @@ Users with push access can create a deployment for a given ref
 
 ```javascript
 
-postDeploymentsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).deployments.post({
+postDeploymentsResponse = client.repos.owner( currentUserId ).repo( repoId ).deployments.post({
 
   "ref" : "refs/heads/new_test_branch" ,
 
@@ -340,7 +340,7 @@ Users with push access can create deployment statuses for a given deployment:
 
 ```javascript
 
-postDeploymentStatusesResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).deployments.id( deploymentId ).statuses.post({
+postDeploymentStatusesResponse = client.repos.owner( currentUserId ).repo( repoId ).deployments.id( deploymentId ).statuses.post({
 
   "state": "success",
 
@@ -374,7 +374,7 @@ Users with pull access can view deployment statuses for a deployment
 
 ```javascript
 
-deploymentStatusesResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).deployments.id( deploymentId ).statuses.get({}, {
+deploymentStatusesResponse = client.repos.owner( currentUserId ).repo( repoId ).deployments.id( deploymentId ).statuses.get({}, {
 
   headers: {
 
@@ -400,7 +400,7 @@ Users with push access to the repository will receive all releases (i.e., publis
 
 ```javascript
 
-releasesResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).releases.get()
+releasesResponse = client.repos.owner( currentUserId ).repo( repoId ).releases.get()
 
 ```
 
@@ -420,7 +420,7 @@ Users with push access to the repository can create a release.
 
 ```javascript
 
-postReleaseResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).releases.post({
+postReleaseResponse = client.repos.owner( currentUserId ).repo( repoId ).releases.post({
 
   "tag_name": "v1.0.0",
 
@@ -454,7 +454,7 @@ Get a single release
 
 ```javascript
 
-idResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).releases.id( releaseId ).get()
+idResponse = client.repos.owner( currentUserId ).repo( repoId ).releases.id( releaseId ).get()
 
 ```
 
@@ -472,7 +472,7 @@ Users with push access to the repository can edit a release
 
 ```javascript
 
-patchReleaseResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).releases.id( releaseId ).patch({
+patchReleaseResponse = client.repos.owner( currentUserId ).repo( repoId ).releases.id( releaseId ).patch({
 
   "tag_name": "v1.0.0",
 
@@ -508,7 +508,7 @@ The asset data is expected in its raw binary form, rather than JSON. Everything 
 
 ```javascript
 
-postAssetsResponse = GitHubUploadAPIv3.repos.ownerId( currentUserId ).repoId( repoId ).releases.id( releaseId ).assets.post({
+postAssetsResponse = GitHubUploadAPIv3.repos.owner( currentUserId ).repo( repoId ).releases.id( releaseId ).assets.post({
 
   "field1": "value1"
 
@@ -536,7 +536,7 @@ List assets for a release
 
 ```javascript
 
-assetsResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).releases.id( releaseId ).assets.get()
+assetsResponse = client.repos.owner( currentUserId ).repo( repoId ).releases.id( releaseId ).assets.get()
 
 ```
 
@@ -556,7 +556,7 @@ Get a single release asset
 
 ```javascript
 
-assetResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).releases.assets.id( assetId ).get()
+assetResponse = client.repos.owner( currentUserId ).repo( repoId ).releases.assets.id( assetId ).get()
 
 ```
 
@@ -576,7 +576,7 @@ Users with push access to the repository can edit a release asset.
 
 ```javascript
 
-patchAssetResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).releases.assets.id( assetId ).patch({
+patchAssetResponse = client.repos.owner( currentUserId ).repo( repoId ).releases.assets.id( assetId ).patch({
 
   "name" : "foo-1.0.0-osx.zip" ,
 
@@ -600,7 +600,7 @@ Delete a release asset
 
 ```javascript
 
-deleteAssetResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).releases.assets.id( assetId ).delete()
+deleteAssetResponse = client.repos.owner( currentUserId ).repo( repoId ).releases.assets.id( assetId ).delete()
 
 ```
 
@@ -618,7 +618,7 @@ Users with push access to the repository can delete a release
 
 ```javascript
 
-deleteReleaseResponse = client.repos.ownerId( currentUserId ).repoId( repoId ).releases.id( releaseId ).delete()
+deleteReleaseResponse = client.repos.owner( currentUserId ).repo( repoId ).releases.id( releaseId ).delete()
 
 ```
 
@@ -636,6 +636,6 @@ Garbage collection. Delete a repository.
 
 ```javascript
 
-client.repos.ownerId( currentUserId ).repoId( repoId ).delete()
+client.repos.owner( currentUserId ).repo( repoId ).delete()
 
 ```

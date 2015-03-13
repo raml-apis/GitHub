@@ -1,5 +1,5 @@
 ---
-site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6519/preview
+site: https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/portal/pages/6519/edit
 apiNotebookVersion: 1.1.66
 title: User
 ---
@@ -35,7 +35,7 @@ keyValue = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCCoHjh/dHsAYbgQCRS7gKABBuxoQjm
 ```
 
 ```javascript
-// Read about the GitHub at https://anypoint.mulesoft.com/apiplatform/popular/admin/#/dashboard/apis/7782/versions/7918/contracts
+// Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
 ```
 
@@ -85,7 +85,7 @@ assert.equal( patchUserResponse.status, 200 )
 Follow a user.
 
 ```javascript
-putFollowingResponse = client.user.following.userId( notebookUserId ).put()
+putFollowingResponse = client.user.following.username( notebookUserId ).put()
 ```
 
 ```javascript
@@ -95,7 +95,7 @@ assert.equal( putFollowingResponse.status, 204 )
 Check if you are following a user
 
 ```javascript
-followingUserResponse = client.user.following.userId( notebookUserId ).get()
+followingUserResponse = client.user.following.username( notebookUserId ).get()
 ```
 
 ```javascript
@@ -115,7 +115,7 @@ assert.equal( followingResponse.status, 200 )
 Unfollow a user.
 
 ```javascript
-deleteFollowingResponse = client.user.following.userId( notebookUserId ).delete()
+deleteFollowingResponse = client.user.following.username( notebookUserId ).delete()
 ```
 
 ```javascript
@@ -125,7 +125,7 @@ assert.equal( deleteFollowingResponse.status, 204 )
 Let's delete a repository which could have been created during previous notebook runs.
 
 ```javascript
-client.repos.ownerId( ownerId ).repoId( repoId ).delete()
+client.repos.owner( ownerId ).repo( repoId ).delete()
 ```
 
 Create a new repository for the authenticated user.
@@ -180,7 +180,7 @@ assert.equal( publicRepositoriesResponse.status, 200 )
 Star a repository
 
 ```javascript
-putStarRepoResponse = client.user.starred.ownerId( ownerId ).repoId( repoId ).put()
+putStarRepoResponse = client.user.starred.owner( ownerId ).repo( repoId ).put()
 ```
 
 ```javascript
@@ -200,7 +200,7 @@ assert.equal( starredResponse.status, 200 )
 Check if you are starring a repository
 
 ```javascript
-starredRepoResponse = client.user.starred.ownerId( ownerId ).repoId( repoId ).get()
+starredRepoResponse = client.user.starred.owner( ownerId ).repo( repoId ).get()
 ```
 
 ```javascript
@@ -210,7 +210,7 @@ assert.equal( starredRepoResponse.status, 204 )
 Unstar a repositor
 
 ```javascript
-unstarResponse = client.user.starred.ownerId( ownerId ).repoId( repoId ).delete()
+unstarResponse = client.user.starred.owner( ownerId ).repo( repoId ).delete()
 ```
 
 ```javascript
@@ -327,7 +327,7 @@ assert.equal( emailsResponse.status, 204 )
 Let's create an issue before retreiving a list of issues.
 
 ```javascript
-client.repos.ownerId( ownerId ).repoId( repoId ).issues.post({
+client.repos.owner( ownerId ).repo( repoId ).issues.post({
   "title": "API Notebook Test Issue",
   "body": "This issue was created by the API Notebook during /users testing",
   "assignee": ownerId,
@@ -353,7 +353,7 @@ assert.equal( issuesResponse.status, 200 )
 Watch a repository
 
 ```javascript
-watchResponse = client.user.subscriptions.ownerId(ownerId ).repoId( repoId ).put()
+watchResponse = client.user.subscriptions.owner(ownerId ).repo( repoId ).put()
 ```
 
 ```javascript
@@ -373,7 +373,7 @@ assert.equal( subscriptionsResponse.status, 200 )
 Check if you are watching a repository
 
 ```javascript
-watchingResponse = client.user.subscriptions.ownerId( ownerId ).repoId( repoId ).get()
+watchingResponse = client.user.subscriptions.owner( ownerId ).repo( repoId ).get()
 ```
 
 ```javascript
@@ -383,7 +383,7 @@ assert.equal( watchingResponse.status, 204 )
 Stop watching a repositor
 
 ```javascript
-stopWatchingResponse = client.user.subscriptions.ownerId(ownerId ).repoId( repoId ).delete()
+stopWatchingResponse = client.user.subscriptions.owner(ownerId ).repo( repoId ).delete()
 ```
 
 ```javascript
@@ -393,7 +393,7 @@ assert.equal( stopWatchingResponse.status, 204 )
 Delete the repository
 
 ```javascript
-deleteRepoResponse = client.repos.ownerId( ownerId ).repoId( repoId ).delete()
+deleteRepoResponse = client.repos.owner( ownerId ).repo( repoId ).delete()
 ```
 
 ```javascript
