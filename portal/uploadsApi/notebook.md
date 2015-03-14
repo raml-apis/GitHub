@@ -2,4 +2,4 @@ The API notebooks are all executable! Hit "enter" in any code cell to execute it
 
 #Considerations
 
-- Please, refer to the [GitHub Notebooks collection](https://anypoint.mulesoft.com/apiplatform/popular/#/portals/apis/7782/versions/7918).
+- Please, refer to the [GitHub Notebooks collection](https://anypoint.mulesoft.com/apiplatform/popular/#/portals/apis/7782/versions/7918/pages/6518).
