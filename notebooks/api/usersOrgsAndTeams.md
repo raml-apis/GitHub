@@ -34,7 +34,7 @@ repoId = "API-Notebook-Test-Organization-Repository-8"
 
 ```javascript
 // Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
-API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
+API.createClient('client', '#REF_TAG_DEFENITION');
 ```
 
 ```javascript
@@ -286,7 +286,7 @@ Let's delete a repository which could have been created during earlier notebook 
 client.repos.owner( orgId ).repo( repoId ).delete()
 ```
 
-This is the user’s organization dashboard. You must be authenticated as the user to view this.
+This is the userï¿½s organization dashboard. You must be authenticated as the user to view this.
 
 ```javascript
 postReposResponse = client.orgs.org( orgId ).repos.post({
@@ -431,9 +431,9 @@ assert.equal( patchTeamResponse.status, 200 )
 Add team membership.
 In order to add a membership between a user and a team, the authenticated user must have 'admin' permissions to the team or be an owner of the organization that the team is associated with.
 
-If the user is already a part of the team’s organization (meaning they’re on at least one other team in the organization), this endpoint will add the user to the team.
+If the user is already a part of the teamï¿½s organization (meaning theyï¿½re on at least one other team in the organization), this endpoint will add the user to the team.
 
-If the user is completely unaffiliated with the team’s organization (meaning they’re on none of the organization’s teams), this endpoint will send an invitation to the user via email. This newly-created membership will be in the "pending" state until the user accepts the invitation, at which point the membership will transition to the "active" state and the user will be added as a member of the team.
+If the user is completely unaffiliated with the teamï¿½s organization (meaning theyï¿½re on none of the organizationï¿½s teams), this endpoint will send an invitation to the user via email. This newly-created membership will be in the "pending" state until the user accepts the invitation, at which point the membership will transition to the "active" state and the user will be added as a member of the team.
 
 ```javascript
 addTeamMemberResponse = client.teams.teamId( teamId ).memberships.username( notebookUserId ).put()
@@ -456,7 +456,7 @@ assert.equal( teamMembersResponse.status, 200 )
 ```
 
 Get team membership.
-In order to get a user’s membership with a team, the authenticated user must be a member of the team or an owner of the team’s organization.
+In order to get a userï¿½s membership with a team, the authenticated user must be a member of the team or an owner of the teamï¿½s organization.
 
 ```javascript
 teamMemberResponse = client.teams.teamId( teamId ).memberships.username( notebookUserId ).get()
