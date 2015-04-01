@@ -48,7 +48,7 @@ clientSecret = prompt("Please, enter your Client Secret")
 
 // Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 
-API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
+API.createClient('client', '#REF_TAG_DEFENITION_GitHub API:');
 
 ```
 
@@ -66,7 +66,7 @@ API.authenticate(client,"oauth_2_0",{
 
 ```javascript
 
-API.createClient('GitHubUploadAPIv3', '/apiplatform/repository/public/organizations/30/apis/7785/versions/7921/definition');
+API.createClient('GitHubUploadAPIv3', '#REF_TAG_DEFENITION_GitHub Upload:');
 
 ```
 

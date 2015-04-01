@@ -30,7 +30,7 @@ repoId = "API-Notebook-Test-Organization-Repository"
 
 ```javascript
 // Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
-API.createClient('client', '/apiplatform/repository/public/organizations/30/apis/7782/versions/7918/definition');
+API.createClient('client', '#REF_TAG_DEFENITION');
 ```
 
 ```javascript
