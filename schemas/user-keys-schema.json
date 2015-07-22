@@ -1,23 +1,21 @@
 {
     "$schema": "http://json-schema.org/draft-03/schema",
     "type": "array",
-    "": [
-        {
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "key": {
-                    "type": "string"
-                },
-                "url": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
+    "items": {
+        "properties": {
+            "id": {
+                "type": "integer"
             },
-            "type": "object"
-        }
-    ]
+            "key": {
+                "type": "string"
+            },
+            "url": {
+                "type": "string"
+            },
+            "title": {
+                "type": "string"
+            }
+        },
+        "type": "object"
+    }
 }
