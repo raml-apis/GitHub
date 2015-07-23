@@ -1,20 +1,18 @@
 {
     "$schema": "http://json-schema.org/draft-03/schema",
     "type": "array",
-    "": [
-        {
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "verified": {
-                    "type": "boolean"
-                },
-                "primary": {
-                    "type": "boolean"
-                }
+    "items": {
+        "properties": {
+            "email": {
+                "type": "string"
             },
-            "type": "object"
-        }
-    ]
+            "verified": {
+                "type": "boolean"
+            },
+            "primary": {
+                "type": "boolean"
+            }
+        },
+        "type": "object"
+    }
 }

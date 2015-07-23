@@ -1,14 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-03/schema",
     "type": "array",
-    "": [
-        {
-            "id": {
-                "type": "integer"
-            },
-            "key": {
-                "type": "string"
-            }
+    "items": {
+        "id": {
+            "type": "integer"
+        },
+        "key": {
+            "type": "string"
         }
-    ]
+    }
 }
