@@ -2119,6 +2119,8 @@ securedBy: [ oauth_2_0 ]
             Example: Deleting a tag:        DELETE /repos/octocat/Hello-World/git/refs/tags/v1.0
           responses: 
             204: 
+              description: |
+                No content.
         patch: 
           description: Update a Reference
           body: 
@@ -2519,6 +2521,8 @@ securedBy: [ oauth_2_0 ]
         description: Users with push access to the repository can delete a release.
         responses: 
           204: 
+            description: |
+              No Content
       /assets: 
         type: base
         get: 
@@ -2535,6 +2539,8 @@ securedBy: [ oauth_2_0 ]
         description: Delete a release asset
         responses: 
           204: 
+            description: |
+              No Content
       get: 
         description: Get a single release asset
         responses: 
@@ -3010,7 +3016,6 @@ securedBy: [ oauth_2_0 ]
               example: !include examples/gitignore-lang-example.json
 /markdown: 
   type: base
-  description: ""
   post: 
     description: Render an arbitrary Markdown document
     body: 
@@ -3024,7 +3029,6 @@ securedBy: [ oauth_2_0 ]
             example: !include examples/markdown-example.html
   /raw: 
     type: base
-    description: ""
     post: 
       description: Render a Markdown document in raw mode
       body: 
