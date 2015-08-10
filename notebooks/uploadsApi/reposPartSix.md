@@ -48,7 +48,7 @@ clientSecret = prompt("Please, enter your Client Secret")
 
 // Read about the GitHub at http://api-portal.anypoint.mulesoft.com/onpositive/api/github
 
-API.createClient('client', '#REF_TAG_DEFENITION_GitHub API:');
+API.createClient('client', '#REF_TAG_DEFENITION_GitHub:');
 
 ```
 
