@@ -68,6 +68,7 @@ schemas:
   - commit: !include schemas/commit-schema.json
   - commitBody: !include schemas/commitBody-schema.json
   - labelsBody: !include schemas/labelsBody-schema.json
+  - labelBody: !include schemas/labelBody-schema.json
   - label: !include schemas/label-schema.json
   - readme: !include schemas/readme-schema.json
   - teams: !include schemas/teams-schema.json
@@ -87,6 +88,7 @@ schemas:
   - mergesSuccessful: !include schemas/mergesSuccessful-schema.json
   - mergesConflict: !include schemas/mergesConflict-schema.json
   - issueBody: !include schemas/issueBody-schema.json
+  - issuePatch: !include schemas/issuePatch-schema.json
   - issue: !include schemas/issue-schema.json
   - event: !include schemas/event-schema.json
   - issuesComments: !include schemas/issuesComments-schema.json
@@ -97,11 +99,11 @@ schemas:
   - heads: !include schemas/heads-schema.json
   - headBranchBody: !include schemas/headBranchBody-schema.json
   - repoCommitBody: !include schemas/repoCommitBody-schema.json
-  - gitCommit: !include schemas/gitCommit-schema.json
   - repoCommit: !include schemas/repoCommit-schema.json
   - blob: !include schemas/blob-schema.json
   - blobs: !include schemas/blobs-schema.json
   - tag: !include schemas/tag-schema.json
+  - tagPost: !include schemas/tagPost-schema.json
   - tags: !include schemas/tags-schema.json
   - tree: !include schemas/tree-schema.json
   - trees: !include schemas/trees-schema.json
@@ -113,7 +115,6 @@ schemas:
   - deleteFileBody: !include schemas/deleteFileBody-schema.json
   - deleteFile: !include schemas/deleteFile-schema.json
   - forks: !include schemas/forks-schema.json
-  - forkBody: !include schemas/forkBody-schema.json
   - fork: !include schemas/fork-schema.json
   - user: !include schemas/user-schema.json
   - user-update: !include schemas/user-update-schema.json
@@ -1034,8 +1035,8 @@ securedBy: [ oauth_2_0 ]
         201: 
           body: 
             application/json: 
-              schema: pulls
-              example: !include examples/pulls-example.json
+              schema: pullRequest
+              example: !include examples/pullRequest-example.json
     /{number}: 
       type: item
       uriParameters: 
@@ -1621,8 +1622,8 @@ securedBy: [ oauth_2_0 ]
       description: Create a label.
       body: 
         application/json: 
-          schema: labelsBody
-          example: !include examples/labelsBody-example.json
+          schema: labelBody
+          example: !include examples/labelBody-example.json
       responses: 
         201: 
           body: 
@@ -1646,8 +1647,8 @@ securedBy: [ oauth_2_0 ]
         description: Update a label.
         body: 
           application/json: 
-            schema: labelsBody
-            example: !include examples/labelsBody-schema-example.json
+            schema: labelBody
+            example: !include examples/labelBody-schema-example.json
         responses: 
           200: 
             body: 
@@ -1939,8 +1940,8 @@ securedBy: [ oauth_2_0 ]
           Issue owners and users with push access can edit an issue.
         body: 
           application/json: 
-            schema: issue
-            example: !include examples/issue-schema-example.json
+            schema: issuePatch
+            example: !include examples/issuePatch-example.json
         responses: 
           200: 
             body: 
@@ -2153,8 +2154,8 @@ securedBy: [ oauth_2_0 ]
           201: 
             body: 
               application/json: 
-                schema: gitCommit
-                example: !include examples/gitCommit-example.json
+                schema: repoCommit
+                example: !include examples/repoCommit-example.json
       /{shaCode}: 
         type: item
         uriParameters: 
@@ -2212,13 +2213,13 @@ securedBy: [ oauth_2_0 ]
           the tag reference - this call would be unnecessary.
         body: 
           application/json: 
-            schema: tag
-            example: !include examples/tag-example.json
+            schema: tagPost
+            example: !include examples/tagPost-example.json
         responses: 
           201: 
             body: 
               application/json: 
-                schema: tags
+                schema: tag
                 example: !include examples/tag-example.json
       /{shaCode}: 
         type: item
@@ -2377,7 +2378,7 @@ securedBy: [ oauth_2_0 ]
         200: 
           body: 
             application/json: 
-              schema: tags
+              schema: tag
               example: !include examples/tag-example.json
   /forks: 
     type: collection
@@ -2402,10 +2403,9 @@ securedBy: [ oauth_2_0 ]
         Forking a Repository happens asynchronously. Therefore, you may have to wai
         a short period before accessing the git objects. If this takes longer than 5
         minutes, be sure to contact Support.
-      body: 
-        application/json: 
-          schema: forkBody
-          example: !include examples/forkBody-example.json
+      queryParameters: 
+        organization: 
+          description: Optional parameter to specify the organization name if forking into an organization.
       responses: 
         201: 
           body: 
@@ -2496,6 +2496,10 @@ securedBy: [ oauth_2_0 ]
               schema: release
               example: !include examples/release-example.json
     /{id}: 
+      uriParameters: 
+        id: 
+          description: ID of release
+          type: integer
       type: base
       get: 
         description: Get a single release

@@ -27,7 +27,6 @@
     } ,
     "parents" : {
       "type" : "array" ,
-      "required" : true ,
       "items" : [
         {
           "type" : "string"

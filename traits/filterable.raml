@@ -3,8 +3,7 @@ queryParameters:
     description: |
       Issues assigned to you / created by you / mentioning you / you're
       subscribed to updates for / All issues the authenticated user can see
-    required: true
-    enum: 
+    enum:
       - assigned
       - created
       - mentioned
@@ -12,21 +11,17 @@ queryParameters:
       - all
     default: all
   state: 
-    required: true
     enum: [ open , closed ]
     default: open
   labels: 
     description: String list of comma separated Label names. Example - bug,ui,@high.
-    required: true
-  sort: 
-    required: true
-    enum: 
+  sort:
+    enum:
       - created
       - updated
       - comments
     default: created
   direction: 
-    required: true
     enum: [ asc , desc ]
     default: desc
   since: 
