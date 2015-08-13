@@ -3,6 +3,22 @@
   "$schema" : "http://json-schema.org/draft-03/schema" ,
   "type" : "object" ,
   "properties" : {
+    "url" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "html_url" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "number" : {
+      "type" : "number" ,
+      "required" : false
+    } ,
+    "state" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
     "title" : {
       "type" : "string" ,
       "required" : false
@@ -11,22 +27,182 @@
       "type" : "string" ,
       "required" : false
     } ,
-    "assignee" : {
-      "type" : "string" ,
-      "required" : false
-    } ,
-    "milestone" : {
-      "type" : "number" ,
-      "required" : false
+    "user" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "login" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "id" : {
+          "type" : "integer" ,
+          "required" : false
+        } ,
+        "avatar_url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "gravatar_id" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "url" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
     } ,
     "labels" : {
       "type" : "array" ,
       "required" : false ,
       "items" : [
         {
-          "type" : "string"
+          "type" : "object" ,
+          "properties" : {
+            "url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "name" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "color" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
         }
       ]
+    } ,
+    "assignee" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "login" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "id" : {
+          "type" : "integer" ,
+          "required" : false
+        } ,
+        "avatar_url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "gravatar_id" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "url" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "milestone" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "number" : {
+          "type" : "integer" ,
+          "required" : false
+        } ,
+        "state" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "title" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "description" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "creator" : {
+          "type" : "object" ,
+          "required" : false ,
+          "properties" : {
+            "login" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "id" : {
+              "type" : "integer" ,
+              "required" : false
+            } ,
+            "avatar_url" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "gravatar_id" : {
+              "type" : "string" ,
+              "required" : false
+            } ,
+            "url" : {
+              "type" : "string" ,
+              "required" : false
+            }
+          }
+        } ,
+        "open_issues" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "closed_issues" : {
+          "type" : "number" ,
+          "required" : false
+        } ,
+        "created_at" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "due_on" : {
+          "type" : "object" ,
+          "required" : false
+        }
+      }
+    } ,
+    "comments" : {
+      "type" : "number" ,
+      "required" : false
+    } ,
+    "pull_request" : {
+      "type" : "object" ,
+      "required" : false ,
+      "properties" : {
+        "html_url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "diff_url" : {
+          "type" : "string" ,
+          "required" : false
+        } ,
+        "patch_url" : {
+          "type" : "string" ,
+          "required" : false
+        }
+      }
+    } ,
+    "closed_at" : {
+      "type" : "object" ,
+      "required" : false
+    } ,
+    "created_at" : {
+      "type" : "string" ,
+      "required" : false
+    } ,
+    "updated_at" : {
+      "type" : "string" ,
+      "required" : false
     }
   }
 }

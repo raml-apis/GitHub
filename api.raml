@@ -104,7 +104,6 @@ schemas:
   - blobs: !include schemas/blobs-schema.json
   - tag: !include schemas/tag-schema.json
   - tagPost: !include schemas/tagPost-schema.json
-  - tags: !include schemas/tags-schema.json
   - tree: !include schemas/tree-schema.json
   - trees: !include schemas/trees-schema.json
   - subscribition: !include schemas/subscribition-schema.json
@@ -1648,7 +1647,7 @@ securedBy: [ oauth_2_0 ]
         body: 
           application/json: 
             schema: labelBody
-            example: !include examples/labelBody-schema-example.json
+            example: !include examples/labelBody-example.json
         responses: 
           200: 
             body: 
@@ -2496,11 +2495,11 @@ securedBy: [ oauth_2_0 ]
               schema: release
               example: !include examples/release-example.json
     /{id}: 
+      type: base
       uriParameters: 
         id: 
           description: ID of release
           type: integer
-      type: base
       get: 
         description: Get a single release
         responses: 
