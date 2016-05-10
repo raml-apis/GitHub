@@ -4,169 +4,169 @@ version: v3
 baseUri: https://api.github.com
 mediaType: application/json
 securitySchemes:
-  - oauth_2_0: !include securitySchemes/oauth_2_0.raml
+  oauth_2_0: !include securitySchemes/oauth_2_0.raml
 uses:
-  types: !include types.raml
+  types: types.raml
 schemas:
-  - feeds: !include schemas/feeds-schema.json
-  - meta: !include schemas/meta-schema.json
-  - rate_limit: !include schemas/rate_limit-schema.json
-  - issues: !include schemas/issues-schema.json
-  - notifications: !include schemas/notifications-schema.json
-  - notificationMarkRead: !include schemas/notificationMarkRead-schema.json
-  - subscription: !include schemas/subscription-schema.json
-  - putSubscription: !include schemas/putSubscription-schema.json
-  - gists: !include schemas/gists-schema.json
-  - postGist: !include schemas/postGist-schema.json
-  - gist: !include schemas/gist-schema.json
-  - patchGist: !include schemas/patchGist-schema.json
-  - comments: !include schemas/comments-schema.json
-  - postComment: !include schemas/postComment-schema.json
-  - comment: !include schemas/comment-schema.json
-  - organization: !include schemas/organization-schema.json
-  - patchOrg: !include schemas/patchOrg-schema.json
-  - orgMembers: !include schemas/orgMembers-schema.json
-  - repos: !include schemas/repos-schema.json
-  - postRepo: !include schemas/postRepo-schema.json
-  - orgTeams: !include schemas/orgTeams-schema.json
-  - orgTeamsPost: !include schemas/orgTeamsPost-schema.json
-  - team: !include schemas/team-schema.json
-  - orgPublicMembers: !include schemas/orgPublicMembers-schema.json
-  - editTeam: !include schemas/editTeam-schema.json
-  - members: !include schemas/members-schema.json
-  - repositories: !include schemas/repositories-schema.json
-  - repo: !include schemas/repo-schema.json
-  - repoEdit: !include schemas/repoEdit-schema.json
-  - pulls: !include schemas/pulls-schema.json
-  - pullRequest: !include schemas/pullRequest-schema.json
-  - pullUpdate: !include schemas/pullUpdate-schema.json
-  - commits: !include schemas/commits-schema.json
-  - pullsComment: !include schemas/pullsComment-schema.json
-  - pullsCommentPost: !include schemas/pullsCommentPost-schema.json
-  - mergePullBody: !include schemas/mergePullBody-schema.json
-  - merge: !include schemas/merge-schema.json
-  - pullsComments: !include schemas/pullsComments-schema.json
-  - commentBody: !include schemas/commentBody-schema.json
-  - hook: !include schemas/hook-schema.json
-  - hookBody: !include schemas/hookBody-schema.json
-  - keys: !include schemas/keys-schema.json
-  - keyBody: !include schemas/keyBody-schema.json
-  - key: !include schemas/key-schema.json
-  - milestone: !include schemas/milestone-schema.json
-  - milestoneBody: !include schemas/milestoneBody-schema.json
-  - milestoneUpdate: !include schemas/milestoneUpdate-schema.json
-  - labels: !include schemas/labels-schema.json
-  - repoComments: !include schemas/repoComments-schema.json
-  - commitComments: !include schemas/commitComments-schema.json
-  - languages: !include schemas/languages-schema.json
-  - collaborators: !include schemas/collaborators-schema.json
-  - assignees: !include schemas/assignees-schema.json
-  - branches: !include schemas/branches-schema.json
-  - branch: !include schemas/branch-schema.json
-  - commit: !include schemas/commit-schema.json
-  - commitBody: !include schemas/commitBody-schema.json
-  - labelsBody: !include schemas/labelsBody-schema.json
-  - label: !include schemas/label-schema.json
-  - readme: !include schemas/readme-schema.json
-  - teams: !include schemas/teams-schema.json
-  - stargazers: !include schemas/stargazers-schema.json
-  - contributors: !include schemas/contributors-schema.json
-  - participationStats: !include schemas/participationStats-schema.json
-  - commitActivityStats: !include schemas/commitActivityStats-schema.json
-  - contributorsStats: !include schemas/contributorsStats-schema.json
-  - punchCardStats: !include schemas/punchCardStats-schema.json
-  - codeFrequencyStats: !include schemas/codeFrequencyStats-schema.json
-  - ref: !include schemas/ref-schema.json
-  - refBody: !include schemas/refBody-schema.json
-  - downloads: !include schemas/downloads-schema.json
-  - downloadBody: !include schemas/downloadBody-schema.json
-  - createDownload: !include schemas/createDownload-schema.json
-  - mergesBody: !include schemas/mergesBody-schema.json
-  - mergesSuccessful: !include schemas/mergesSuccessful-schema.json
-  - mergesConflict: !include schemas/mergesConflict-schema.json
-  - issueBody: !include schemas/issueBody-schema.json
-  - issue: !include schemas/issue-schema.json
-  - event: !include schemas/event-schema.json
-  - issuesComments: !include schemas/issuesComments-schema.json
-  - issuesComment: !include schemas/issuesComment-schema.json
-  - refs: !include schemas/refs-schema.json
-  - refsBody: !include schemas/refsBody-schema.json
-  - headBranch: !include schemas/headBranch-schema.json
-  - heads: !include schemas/heads-schema.json
-  - headBranchBody: !include schemas/headBranchBody-schema.json
-  - repoCommitBody: !include schemas/repoCommitBody-schema.json
-  - gitCommit: !include schemas/gitCommit-schema.json
-  - repoCommit: !include schemas/repoCommit-schema.json
-  - blob: !include schemas/blob-schema.json
-  - blobs: !include schemas/blobs-schema.json
-  - tag: !include schemas/tag-schema.json
-  - tags: !include schemas/tags-schema.json
-  - tree: !include schemas/tree-schema.json
-  - trees: !include schemas/trees-schema.json
-  - subscribition: !include schemas/subscribition-schema.json
-  - subscribitionBody: !include schemas/subscribitionBody-schema.json
-  - contents-path: !include schemas/contents-path-schema.json
-  - createFileBody: !include schemas/createFileBody-schema.json
-  - createFile: !include schemas/createFile-schema.json
-  - deleteFileBody: !include schemas/deleteFileBody-schema.json
-  - deleteFile: !include schemas/deleteFile-schema.json
-  - forks: !include schemas/forks-schema.json
-  - forkBody: !include schemas/forkBody-schema.json
-  - fork: !include schemas/fork-schema.json
-  - user: !include schemas/user-schema.json
-  - user-update: !include schemas/user-update-schema.json
-  - users: !include schemas/users-schema.json
-  - user-userId: !include schemas/user-userId-schema.json
-  - users-userId-orgs: !include schemas/users-userId-orgs-schema.json
-  - user-userId-starred: !include schemas/user-userId-starred-schema.json
-  - user-userId-subscribitions: !include schemas/user-userId-subscribitions-schema.json
-  - user-keys: !include schemas/user-keys-schema.json
-  - user-keys-post: !include schemas/user-keys-post-schema.json
-  - user-keys-keyId: !include schemas/user-keys-keyId-schema.json
-  - user-emails: !include schemas/user-emails-schema.json
-  - user-emails_final: !include schemas/user-emails_final-schema.json
-  - users-userId-keys: !include schemas/users-userId-keys-schema.json
-  - gitignore: !include schemas/gitignore-schema.json
-  - gitignore-lang: !include schemas/gitignore-lang-schema.json
-  - markdown: !include schemas/markdown-schema.json
-  - search-issues: !include schemas/search-issues-schema.json
-  - emojis: !include schemas/emojis-schema.json
-  - search-issues-by-keyword: !include schemas/search-issues-by-keyword-schema.json
-  - search-repositories-by-keyword: !include schemas/search-repositories-by-keyword-schema.json
-  - search-users-by-keyword: !include schemas/search-users-by-keyword-schema.json
-  - search-user-by-email: !include schemas/search-user-by-email-schema.json
-  - teamRepos: !include schemas/teamRepos-schema.json
-  - releases: !include schemas/releases-schema.json
-  - release-create: !include schemas/release-create-schema.json
-  - release: !include schemas/release-schema.json
-  - deployment-resp: !include schemas/deployment-resp-schema.json
-  - deployment-statuses: !include schemas/deployment-statuses-schema.json
-  - deployment-statuses-create: !include schemas/deployment-statuses-create-schema.json
-  - deployment: !include schemas/deployment-schema.json
-  - repo-deployments: !include schemas/repo-deployments-schema.json
-  - compare-commits: !include schemas/compare-commits-schema.json
-  - teams-list: !include schemas/teams-list-schema.json
-  - pullsPost: !include schemas/pullsPost-schema.json
-  - emailsPost: !include schemas/emailsPost-schema.json
-  - assets: !include schemas/assets-schema.json
-  - asset: !include schemas/asset-schema.json
-  - assetPatch: !include schemas/assetPatch-schema.json
-  - gitRefPatch: !include schemas/gitRefPatch-schema.json
-  - refStatus: !include schemas/refStatus-schema.json
-  - teamMembership: !include schemas/teamMembership-schema.json
-  - organizationAsTeamMember: !include schemas/organizationAsTeamMember-schema.json
+  feeds: !include schemas/feeds-schema.json
+  meta: !include schemas/meta-schema.json
+  rate_limit: !include schemas/rate_limit-schema.json
+  issues: !include schemas/issues-schema.json
+  notifications: !include schemas/notifications-schema.json
+  notificationMarkRead: !include schemas/notificationMarkRead-schema.json
+  subscription: !include schemas/subscription-schema.json
+  putSubscription: !include schemas/putSubscription-schema.json
+  gists: !include schemas/gists-schema.json
+  postGist: !include schemas/postGist-schema.json
+  gist: !include schemas/gist-schema.json
+  patchGist: !include schemas/patchGist-schema.json
+  comments: !include schemas/comments-schema.json
+  postComment: !include schemas/postComment-schema.json
+  comment: !include schemas/comment-schema.json
+  organization: !include schemas/organization-schema.json
+  patchOrg: !include schemas/patchOrg-schema.json
+  orgMembers: !include schemas/orgMembers-schema.json
+  repos: !include schemas/repos-schema.json
+  postRepo: !include schemas/postRepo-schema.json
+  orgTeams: !include schemas/orgTeams-schema.json
+  orgTeamsPost: !include schemas/orgTeamsPost-schema.json
+  team: !include schemas/team-schema.json
+  orgPublicMembers: !include schemas/orgPublicMembers-schema.json
+  editTeam: !include schemas/editTeam-schema.json
+  members: !include schemas/members-schema.json
+  repositories: !include schemas/repositories-schema.json
+  repo: !include schemas/repo-schema.json
+  repoEdit: !include schemas/repoEdit-schema.json
+  pulls: !include schemas/pulls-schema.json
+  pullRequest: !include schemas/pullRequest-schema.json
+  pullUpdate: !include schemas/pullUpdate-schema.json
+  commits: !include schemas/commits-schema.json
+  pullsComment: !include schemas/pullsComment-schema.json
+  pullsCommentPost: !include schemas/pullsCommentPost-schema.json
+  mergePullBody: !include schemas/mergePullBody-schema.json
+  merge: !include schemas/merge-schema.json
+  pullsComments: !include schemas/pullsComments-schema.json
+  commentBody: !include schemas/commentBody-schema.json
+  hook: !include schemas/hook-schema.json
+  hookBody: !include schemas/hookBody-schema.json
+  keys: !include schemas/keys-schema.json
+  keyBody: !include schemas/keyBody-schema.json
+  key: !include schemas/key-schema.json
+  milestone: !include schemas/milestone-schema.json
+  milestoneBody: !include schemas/milestoneBody-schema.json
+  milestoneUpdate: !include schemas/milestoneUpdate-schema.json
+  labels: !include schemas/labels-schema.json
+  repoComments: !include schemas/repoComments-schema.json
+  commitComments: !include schemas/commitComments-schema.json
+  languages: !include schemas/languages-schema.json
+  collaborators: !include schemas/collaborators-schema.json
+  assignees: !include schemas/assignees-schema.json
+  branches: !include schemas/branches-schema.json
+  branch: !include schemas/branch-schema.json
+  commit: !include schemas/commit-schema.json
+  commitBody: !include schemas/commitBody-schema.json
+  labelsBody: !include schemas/labelsBody-schema.json
+  label: !include schemas/label-schema.json
+  readme: !include schemas/readme-schema.json
+  teams: !include schemas/teams-schema.json
+  stargazers: !include schemas/stargazers-schema.json
+  contributors: !include schemas/contributors-schema.json
+  participationStats: !include schemas/participationStats-schema.json
+  commitActivityStats: !include schemas/commitActivityStats-schema.json
+  contributorsStats: !include schemas/contributorsStats-schema.json
+  punchCardStats: !include schemas/punchCardStats-schema.json
+  codeFrequencyStats: !include schemas/codeFrequencyStats-schema.json
+  ref: !include schemas/ref-schema.json
+  refBody: !include schemas/refBody-schema.json
+  downloads: !include schemas/downloads-schema.json
+  downloadBody: !include schemas/downloadBody-schema.json
+  createDownload: !include schemas/createDownload-schema.json
+  mergesBody: !include schemas/mergesBody-schema.json
+  mergesSuccessful: !include schemas/mergesSuccessful-schema.json
+  mergesConflict: !include schemas/mergesConflict-schema.json
+  issueBody: !include schemas/issueBody-schema.json
+  issue: !include schemas/issue-schema.json
+  event: !include schemas/event-schema.json
+  issuesComments: !include schemas/issuesComments-schema.json
+  issuesComment: !include schemas/issuesComment-schema.json
+  refs: !include schemas/refs-schema.json
+  refsBody: !include schemas/refsBody-schema.json
+  headBranch: !include schemas/headBranch-schema.json
+  heads: !include schemas/heads-schema.json
+  headBranchBody: !include schemas/headBranchBody-schema.json
+  repoCommitBody: !include schemas/repoCommitBody-schema.json
+  gitCommit: !include schemas/gitCommit-schema.json
+  repoCommit: !include schemas/repoCommit-schema.json
+  blob: !include schemas/blob-schema.json
+  blobs: !include schemas/blobs-schema.json
+  tag: !include schemas/tag-schema.json
+  tags: !include schemas/tags-schema.json
+  tree: !include schemas/tree-schema.json
+  trees: !include schemas/trees-schema.json
+  subscribition: !include schemas/subscribition-schema.json
+  subscribitionBody: !include schemas/subscribitionBody-schema.json
+  contents-path: !include schemas/contents-path-schema.json
+  createFileBody: !include schemas/createFileBody-schema.json
+  createFile: !include schemas/createFile-schema.json
+  deleteFileBody: !include schemas/deleteFileBody-schema.json
+  deleteFile: !include schemas/deleteFile-schema.json
+  forks: !include schemas/forks-schema.json
+  forkBody: !include schemas/forkBody-schema.json
+  fork: !include schemas/fork-schema.json
+  user: !include schemas/user-schema.json
+  user-update: !include schemas/user-update-schema.json
+  users: !include schemas/users-schema.json
+  user-userId: !include schemas/user-userId-schema.json
+  users-userId-orgs: !include schemas/users-userId-orgs-schema.json
+  user-userId-starred: !include schemas/user-userId-starred-schema.json
+  user-userId-subscribitions: !include schemas/user-userId-subscribitions-schema.json
+  user-keys: !include schemas/user-keys-schema.json
+  user-keys-post: !include schemas/user-keys-post-schema.json
+  user-keys-keyId: !include schemas/user-keys-keyId-schema.json
+  user-emails: !include schemas/user-emails-schema.json
+  user-emails_final: !include schemas/user-emails_final-schema.json
+  users-userId-keys: !include schemas/users-userId-keys-schema.json
+  gitignore: !include schemas/gitignore-schema.json
+  gitignore-lang: !include schemas/gitignore-lang-schema.json
+  markdown: !include schemas/markdown-schema.json
+  search-issues: !include schemas/search-issues-schema.json
+  emojis: !include schemas/emojis-schema.json
+  search-issues-by-keyword: !include schemas/search-issues-by-keyword-schema.json
+  search-repositories-by-keyword: !include schemas/search-repositories-by-keyword-schema.json
+  search-users-by-keyword: !include schemas/search-users-by-keyword-schema.json
+  search-user-by-email: !include schemas/search-user-by-email-schema.json
+  teamRepos: !include schemas/teamRepos-schema.json
+  releases: !include schemas/releases-schema.json
+  release-create: !include schemas/release-create-schema.json
+  release: !include schemas/release-schema.json
+  deployment-resp: !include schemas/deployment-resp-schema.json
+  deployment-statuses: !include schemas/deployment-statuses-schema.json
+  deployment-statuses-create: !include schemas/deployment-statuses-create-schema.json
+  deployment: !include schemas/deployment-schema.json
+  repo-deployments: !include schemas/repo-deployments-schema.json
+  compare-commits: !include schemas/compare-commits-schema.json
+  teams-list: !include schemas/teams-list-schema.json
+  pullsPost: !include schemas/pullsPost-schema.json
+  emailsPost: !include schemas/emailsPost-schema.json
+  assets: !include schemas/assets-schema.json
+  asset: !include schemas/asset-schema.json
+  assetPatch: !include schemas/assetPatch-schema.json
+  gitRefPatch: !include schemas/gitRefPatch-schema.json
+  refStatus: !include schemas/refStatus-schema.json
+  teamMembership: !include schemas/teamMembership-schema.json
+  organizationAsTeamMember: !include schemas/organizationAsTeamMember-schema.json
 resourceTypes:
-  - item: !include resourceTypes/item.raml
-  - base: !include resourceTypes/base.raml
-  - collection: !include resourceTypes/collection.raml
+  item: !include resourceTypes/item.raml
+  base: !include resourceTypes/base.raml
+  collection: !include resourceTypes/collection.raml
 traits:
-  - filterableSince: !include traits/filterableSince.raml
-  - notifications: !include traits/notifications.raml
-  - filterable: !include traits/filterable.raml
-  - state: !include traits/state.raml
-  - ordering2: !include traits/ordering2.raml
-  - ordering: !include traits/ordering.raml
-  - historical: !include traits/historical.raml
+  filterableSince: !include traits/filterableSince.raml
+  notifications: !include traits/notifications.raml
+  filterable: !include traits/filterable.raml
+  state: !include traits/state.raml
+  ordering2: !include traits/ordering2.raml
+  ordering: !include traits/ordering.raml
+  historical: !include traits/historical.raml
 securedBy: [ oauth_2_0 ]
 /search:
   /code:
@@ -197,8 +197,10 @@ securedBy: [ oauth_2_0 ]
             Can only be 'indexed', which indicates how recently a file has been indexed
             by the GitHub search infrastructure. If not provided, results are sorted
             by best match.
-          enum: [ indexed ]
-          example: sort=stars
+          enum:
+            - indexed
+          example:
+            sort: indexed
       responses:
         200:
           body:
@@ -298,8 +300,11 @@ securedBy: [ oauth_2_0 ]
     responses:
       200:
         body:
-          application/json:
+          application/xml:
             type: types.Events
+  /{id}:
+    type: item
+    get:
 /feeds:
   type: collection
   get:
